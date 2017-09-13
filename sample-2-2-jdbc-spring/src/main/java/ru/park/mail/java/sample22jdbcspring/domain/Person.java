@@ -3,11 +3,11 @@ package ru.park.mail.java.sample22jdbcspring.domain;
 public class Person {
 	private final long id;
 	private final String name;
-	private final long houseId;
-	private final long fartherId;
-	private final long motherId;
+	private final Long houseId;
+	private final Long fartherId;
+	private final Long motherId;
 
-	public Person(long id, String name, long houseId, long fartherId, long motherId) {
+	public Person(long id, String name, Long houseId, Long fartherId, Long motherId) {
 		this.id = id;
 		this.name = name;
 		this.houseId = houseId;
@@ -23,15 +23,15 @@ public class Person {
 		return name;
 	}
 
-	public long getHouseId() {
+	public Long getHouseId() {
 		return houseId;
 	}
 
-	public long getFartherId() {
+	public Long getFartherId() {
 		return fartherId;
 	}
 
-	public long getMotherId() {
+	public Long getMotherId() {
 		return motherId;
 	}
 
@@ -39,10 +39,10 @@ public class Person {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (fartherId ^ (fartherId >>> 32));
-		result = prime * result + (int) (houseId ^ (houseId >>> 32));
+		result = prime * result + ((fartherId == null) ? 0 : fartherId.hashCode());
+		result = prime * result + ((houseId == null) ? 0 : houseId.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + (int) (motherId ^ (motherId >>> 32));
+		result = prime * result + ((motherId == null) ? 0 : motherId.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -56,13 +56,22 @@ public class Person {
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		if (fartherId != other.fartherId)
+		if (fartherId == null) {
+			if (other.fartherId != null)
+				return false;
+		} else if (!fartherId.equals(other.fartherId))
 			return false;
-		if (houseId != other.houseId)
+		if (houseId == null) {
+			if (other.houseId != null)
+				return false;
+		} else if (!houseId.equals(other.houseId))
 			return false;
 		if (id != other.id)
 			return false;
-		if (motherId != other.motherId)
+		if (motherId == null) {
+			if (other.motherId != null)
+				return false;
+		} else if (!motherId.equals(other.motherId))
 			return false;
 		if (name == null) {
 			if (other.name != null)

@@ -4,14 +4,15 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ru.park.mail.java</groupId>
-	<artifactId>samples-reactor</artifactId>
+	<artifactId>samples-2-2-reactor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 
 	<modules>
-		<module>sample-2-1</module>
-		<module>sample-2-2</module>
+		<module>sample-2-2-jdbc-plain</module>
+		<module>sample-2-2-jdbc-spring</module>
+		<module>sample-2-2-jpa-spring-data</module>
 	</modules>
 
 

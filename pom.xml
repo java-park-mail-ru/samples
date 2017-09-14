@@ -10,6 +10,7 @@
 
 
 	<modules>
+		<module>sample-2-1</module>
 		<module>sample-2-2-jdbc-plain</module>
 		<module>sample-2-2-jdbc-spring</module>
 	</modules>

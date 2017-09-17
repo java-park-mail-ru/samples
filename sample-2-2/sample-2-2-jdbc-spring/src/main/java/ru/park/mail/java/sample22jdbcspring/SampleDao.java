@@ -41,6 +41,25 @@ public class SampleDao {
 		return new House(keyHolder.getKey().longValue(), name, words, sigil, allegianceId);
 	}
 
+	private static final RowMapper<House> HOUSE_MAPPER = (res, num) -> {
+
+		Long allegianceId = res.getLong("allegiance_id");
+		if (res.wasNull()) {
+			allegianceId = null;
+		}
+
+		return new House(res.getLong("id"), res.getString("name"), res.getString("words"), res.getString("sigil"),
+				allegianceId);
+	};
+
+	public House getHouse(long id) {
+		List<House> result = template.query("select * from house where id=?", ps -> ps.setLong(1, id), HOUSE_MAPPER);
+		if (result.isEmpty()) {
+			return null;
+		}
+		return result.get(0);
+	}
+
 	public Person createPerson(String name, Long houseId, Long fartherId, Long motherId) {
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 		template.update(con -> {
@@ -81,15 +100,14 @@ public class SampleDao {
 		}
 		return result.get(0);
 	}
-	
-	public List<Person> getAllPeople(){
+
+	public List<Person> getAllPeople() {
 		return template.query("select * from person", PERSON_MAPPER);
 	}
-	
-	public List<Person> getPeople(long houseId){
+
+	public List<Person> getPeople(long houseId) {
 		return template.query("select * from person where house_id=?", ps -> ps.setLong(1, houseId), PERSON_MAPPER);
 	}
-	
 
 	public House createHouseNamed(String name, String words, String sigil, Long allegianceId) {
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();

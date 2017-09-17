@@ -11,14 +11,13 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 public class SimpleController {
-    @SuppressWarnings("InstanceVariableNamingConvention")
-    private int i = 0;
+    private int it = 0;
 
     @RequestMapping(method = RequestMethod.GET, path = "info")
     public ResponseEntity<Pojo> info(HttpSession httpSession) {
         Integer userN = (Integer) httpSession.getAttribute("userN");
-        if ( userN == null) {
-            userN = i++;
+        if (userN == null) {
+            userN = it++;
             httpSession.setAttribute("userN", userN);
         }
         return ResponseEntity.ok(new Pojo(userN));

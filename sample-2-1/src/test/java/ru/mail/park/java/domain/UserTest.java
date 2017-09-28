@@ -4,25 +4,37 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
+
 /**
  * Created by isopov on 29.09.16.
  */
 public class UserTest {
 
-    @Test
-    public void testFight() {
-        User foo = new User("foo");
-        User bar = new User("bar");
+	private User foo, bar;
 
-        foo.increasePower();
-        assertEquals(1, foo.getPower());
+	@Before
+	public void setup() {
+		foo = new User("foo");
+		bar = new User("bar");
+	}
 
-        assertEquals(0, foo.getWins());
-        assertEquals(0, bar.getWins());
+	@Test
+	public void testIncreasePower() {
+		foo.increasePower();
+		assertEquals(1, foo.getPower());
+	}
 
-        foo.fight(bar);
+	@Test
+	public void testFight() {
+		testIncreasePower();
+		assertEquals(0, foo.getWins());
+		assertEquals(0, bar.getWins());
 
-        assertEquals(1, foo.getWins());
-        assertEquals(0, bar.getWins());
-    }
+		foo.fight(bar);
+
+		assertEquals(1, foo.getWins());
+		assertEquals(0, bar.getWins());
+	}
+
 }

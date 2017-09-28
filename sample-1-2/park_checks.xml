@@ -34,6 +34,7 @@
         </module>
 
     <module name="TreeWalker">
+        <module name="SuppressionCommentFilter"/>
         <module name="OuterTypeFilename"/>
         <module name="IllegalTokenText">
             <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
@@ -57,9 +58,7 @@
             <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
         </module>
         <module name="NeedBraces"/>
-        <module name="LeftCurly">
-            <property name="maxLineLength" value="140"/>
-        </module>
+        <module name="LeftCurly"/>
         <module name="RightCurly"/>
         <module name="RightCurly">
             <property name="option" value="alone"/>
@@ -228,7 +227,6 @@
 
         <!-- Checks for common coding problems               -->
         <!-- See http://checkstyle.sf.net/config_coding.html -->
-        <module name="AvoidInlineConditionals"/>
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
         <module name="HiddenField">

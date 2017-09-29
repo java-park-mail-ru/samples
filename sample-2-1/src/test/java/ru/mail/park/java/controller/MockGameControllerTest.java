@@ -22,34 +22,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc(print = MockMvcPrint.NONE)
 public class MockGameControllerTest {
-    @Autowired
-    private UsersService usersService;
+	@Autowired
+	private UsersService usersService;
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @Before
-    public void setup(){
-        usersService.ensureUserExists("foo");
-    }
+	@Before
+	public void setup() {
+		usersService.ensureUserExists("foo");
+	}
 
-    @Test
-    public void testMeRequiresLogin() throws Exception {
-        mockMvc
-                .perform(get("/me"))
-                .andExpect(status().isUnauthorized());
-    }
+	@Test
+	public void testMeRequiresLogin() throws Exception {
+		mockMvc
+				.perform(get("/me"))
+				.andExpect(status().isUnauthorized());
+	}
 
-    @Test
-    public void testMe() throws Exception {
-        mockMvc
-                .perform(get("/me").sessionAttr("username", "foo"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("name").value("foo"))
-                .andExpect(jsonPath("wins").value(0))
-                .andExpect(jsonPath("power").value(0))
-        ;
-    }
-
+	@Test
+	public void testMe() throws Exception {
+		mockMvc
+				.perform(get("/me").sessionAttr("username", "foo"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("name").value("foo"))
+				.andExpect(jsonPath("wins").value(0))
+				.andExpect(jsonPath("power").value(0));
+	}
 
 }

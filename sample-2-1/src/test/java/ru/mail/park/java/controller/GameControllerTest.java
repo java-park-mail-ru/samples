@@ -51,7 +51,7 @@ public class GameControllerTest {
     private List<String> login() {
         when(usersService.ensureUserExists(anyString())).thenReturn(new User("foo"));
 
-        ResponseEntity<User> loginResp = restTemplate.getForEntity("/login/foo", User.class);
+        ResponseEntity<User> loginResp = restTemplate.postForEntity("/login/foo",null, User.class);
         assertEquals(HttpStatus.OK, loginResp.getStatusCode());
         List<String> coockies = loginResp.getHeaders().get("Set-Cookie");
         assertNotNull(coockies);

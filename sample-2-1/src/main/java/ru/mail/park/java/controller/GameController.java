@@ -4,8 +4,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,13 +22,14 @@ public class GameController {
 		this.usersService = usersService;
 	}
 
-	@RequestMapping("/login/{username}")
+ 
+	@PostMapping("/login/{username}")
 	public User login(@PathVariable String username, HttpSession session) {
 		session.setAttribute("username", username);
 		return usersService.ensureUserExists(username);
 	}
 
-	@RequestMapping("/me")
+	@GetMapping("/me")
 	public User me(HttpSession session) {
 		String username = (String) session.getAttribute("username");
 		if (username == null) {
@@ -36,13 +38,13 @@ public class GameController {
 		return usersService.getUser(username);
 	}
 
-	@RequestMapping("/gain")
+	@PostMapping("/gain")
 	public User gain(HttpSession session) {
 		User me = me(session);
 		return me.increasePower();
 	}
 
-	@RequestMapping("/fight/{victim}")
+	@PostMapping("/fight/{victim}")
 	public User fight(@PathVariable String victim, HttpSession session) {
 		User me = me(session);
 		User other = usersService.getUser(victim);

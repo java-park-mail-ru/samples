@@ -57,6 +57,13 @@ public class SampleJpaDao implements SampleDao {
 		return person;
 	}
 
+	
+	
+	@Override
+	public House getHouse(long id) {
+		return em.find(House.class,id);
+	}
+
 	@Override
 	public Person getPerson(long id) {
 		return em.find(Person.class, id);

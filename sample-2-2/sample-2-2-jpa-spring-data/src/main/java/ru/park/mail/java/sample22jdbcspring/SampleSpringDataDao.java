@@ -57,6 +57,13 @@ public class SampleSpringDataDao implements SampleDao {
 		return personRepository.save(person);
 	}
 
+	
+	
+	@Override
+	public House getHouse(long id) {
+		return houseRepository.getOne(id);
+	}
+
 	@Override
 	public Person getPerson(long id) {
 		return personRepository.getOne(id);

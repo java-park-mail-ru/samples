@@ -10,6 +10,8 @@ public interface SampleDao {
 
 	Person createPerson(String name, Long houseId, Long fartherId, Long motherId);
 
+	House getHouse(long id);
+	
 	Person getPerson(long id);
 
 	List<Person> getAllPeople();

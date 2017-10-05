@@ -32,6 +32,7 @@ public class SampleDaoTest {
 		config.setJdbcUrl("jdbc:postgresql://localhost/sample22plain");
 		config.setUsername("sample22plain");
 		config.setPassword("sample22plain");
+		config.setMaximumPoolSize(1);
 
 		ds = new HikariDataSource(config);
 		dao = new SampleDao(ds);

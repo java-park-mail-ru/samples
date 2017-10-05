@@ -61,6 +61,22 @@ public class RetrofitGameControllerTest {
 		login();
 	}
 
+	public static void main(String[] args) {
+//		for (int i = 707483641; i < Integer.MAX_VALUE; i++) {
+//			if(i * 10 > i) {
+//				System.out.println(i + " * 10 = " + i * 10);
+//				return;
+//			}
+//		}
+		
+		System.out.println(954437189 * 10);
+	}
+	
+	
+	
+	
+	
+	
 	private String login() throws IOException {
 		when(usersService.ensureUserExists(anyString())).thenReturn(new User("foo"));
 

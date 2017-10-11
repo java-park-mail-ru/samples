@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,16 @@ public class CustomerController {
 	@GetMapping
 	public List<Customer> getAll() {
 		return customerRepository.findAll();
+	}
+
+	@GetMapping("/name/{firstName}")
+	public Customer getByFirstName(@PathVariable String firstName) {
+		return customerRepository.findByFirstName(firstName);
+	}
+
+	@GetMapping("/{lastName}")
+	public List<Customer> getByLastName(@PathVariable String lastName) {
+		return customerRepository.findByLastName(lastName);
 	}
 
 }

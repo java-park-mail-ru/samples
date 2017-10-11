@@ -11,6 +11,5 @@
 	<modules>
 		<module>sample-2-3-lambda-streams</module>
 		<module>sample-2-3-mongo</module>
-		<module>sample-2-3-webflux</module>
 	</modules>
 </project>

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,11 @@ public class SampleJpaDao implements SampleDao {
 		try {
 			em.persist(house);
 		} catch (PersistenceException ex) {
-			throw new DuplicateHouseException(name, ex);
+			if (ex.getCause() instanceof ConstraintViolationException) {
+				throw new DuplicateHouseException(name, ex);
+			}else {
+				throw ex;
+			}
 		}
 		return house;
 	}
@@ -57,11 +62,9 @@ public class SampleJpaDao implements SampleDao {
 		return person;
 	}
 
-	
-	
 	@Override
 	public House getHouse(long id) {
-		return em.find(House.class,id);
+		return em.find(House.class, id);
 	}
 
 	@Override

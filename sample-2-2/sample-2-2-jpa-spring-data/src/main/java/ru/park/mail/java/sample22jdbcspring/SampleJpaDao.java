@@ -36,7 +36,7 @@ public class SampleJpaDao implements SampleDao {
 		} catch (PersistenceException ex) {
 			if (ex.getCause() instanceof ConstraintViolationException) {
 				throw new DuplicateHouseException(name, ex);
-			}else {
+			} else {
 				throw ex;
 			}
 		}

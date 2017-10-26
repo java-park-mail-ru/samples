@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
 import ru.mail.park.mechanics.Config;
 import ru.mail.park.mechanics.GameSession;
+import ru.mail.park.mechanics.avatar.GameUser;
 import ru.mail.park.mechanics.avatar.MechanicPart;
 import ru.mail.park.mechanics.requests.FinishGame;
 import ru.mail.park.model.Id;
@@ -74,6 +75,10 @@ public class GameSessionService {
             remotePointService.cutDownConnection(gameSession.getSecond().getUserId(), status);
         }
         LOGGER.info("Game session " + gameSession.getSessionId() + " terminated. " + gameSession.toString());
+    }
+
+    public boolean checkHealthState(@NotNull GameSession gameSession) {
+        return gameSession.getPlayers().stream().map(GameUser::getUserId).allMatch(remotePointService::isConnected);
     }
 
     public void startGame(@NotNull UserProfile first, @NotNull UserProfile second) {

@@ -135,7 +135,14 @@ public class GameMechanicsImpl implements GameMechanics {
             final GameSession session = iterator.next();
             if (session.tryFinishGame()) {
                 gameSessionService.forceTerminate(session, false);
+                continue;
             }
+
+            if (!gameSessionService.checkHealthState(session)) {
+                gameSessionService.forceTerminate(session, true);
+                continue;
+            }
+
             try {
                 serverSnapshotService.sendSnapshotsFor(session, frameTime);
             } catch (RuntimeException ex) {

@@ -406,8 +406,9 @@ Game.onGameStarted = function (initMessage) {
 };
 
 Game.updateScores = function (players) {
-    Game.players[Game.userId].score = players[Game.userId].score;
-    Game.players[Game.enemyId].score = players[Game.enemyId].score;
+    players.forEach(function(player) {
+        Game.players[player.id].score = player.score;
+    });
     $("#my_scores").html(Game.players[Game.userId].score);
     $("#enemy_scores").html(Game.players[Game.enemyId].score);
 };

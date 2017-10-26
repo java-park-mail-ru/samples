@@ -42,6 +42,7 @@ public class MechanicsExecutor implements Runnable {
     public void run() {
         //noinspection InfiniteLoopStatement
         long lastFrameMillis = STEP_TIME;
+        try {
         while (true) {
             final long before = clock.millis();
 
@@ -61,6 +62,12 @@ public class MechanicsExecutor implements Runnable {
             }
             final long afterSleep = clock.millis();
             lastFrameMillis = afterSleep - before;
+        }
+        } catch(Throwable e) {
+            LOGGER.error("Mechanics executor was terminated due to exception", e);
+            throw e;
+        } finally {
+            LOGGER.warn("Mechanic executor terminated");
         }
     }
 }

@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.mail.park.mechanics.GameSession;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @Service
 public class GameTaskScheduler {
@@ -79,7 +76,7 @@ public class GameTaskScheduler {
         final List<ScheduledTask> tasks;
 
         private ScheduledTaskList(@NotNull ScheduledTask... tasks) {
-            this.tasks = Arrays.asList(tasks);
+            this.tasks = new ArrayList<>(Arrays.asList(tasks));
         }
 
         private ScheduledTaskList(@NotNull ScheduledTaskList task) {

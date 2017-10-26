@@ -20,9 +20,6 @@ public class ServerSnapshotService {
     @NotNull
     private final RemotePointService remotePointService;
 
-    @NotNull
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     public ServerSnapshotService(@NotNull RemotePointService remotePointService) {
         this.remotePointService = remotePointService;
     }

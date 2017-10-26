@@ -8,11 +8,9 @@ import ru.mail.park.model.UserProfile;
  * Created by Solovyev on 30/10/2016.
  */
 public interface AccountService {
-    UserProfile addUser(String login, String password, String email);
+    UserProfile addUser(String login);
 
     UserProfile getUserByName(String login);
 
     UserProfile getUserById(@NotNull Id<UserProfile> id);
-
-    boolean checkAuth(@NotNull Id<UserProfile> userId, @NotNull String password);
 }

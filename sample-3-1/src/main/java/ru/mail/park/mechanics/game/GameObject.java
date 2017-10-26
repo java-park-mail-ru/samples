@@ -9,9 +9,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-/**
- * Created by Solovyev on 04/11/2016.
- */
 public abstract class GameObject {
     private static final AtomicLong ID_GENERATOR = new AtomicLong();
 

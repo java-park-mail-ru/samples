@@ -3,12 +3,9 @@ package ru.mail.park.mechanics.requests;
 import org.jetbrains.annotations.NotNull;
 import ru.mail.park.mechanics.avatar.Board;
 import ru.mail.park.mechanics.avatar.GameUser;
-import ru.mail.park.mechanics.avatar.Square;
 import ru.mail.park.model.Id;
 import ru.mail.park.model.UserProfile;
 import ru.mail.park.websocket.Message;
-
-import java.util.List;
 import java.util.Map;
 
 public class InitGame{

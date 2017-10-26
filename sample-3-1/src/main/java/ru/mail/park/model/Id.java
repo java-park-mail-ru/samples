@@ -1,12 +1,11 @@
 package ru.mail.park.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Created by Solovyev on 01/11/2016.
  */
-@SuppressWarnings("ClassNamingConvention")
+@SuppressWarnings({"ClassNamingConvention", "unused"})
 public class Id<T> {
     private final long id;
 
@@ -21,7 +20,7 @@ public class Id<T> {
 
     @SuppressWarnings("StaticMethodNamingConvention")
     public static <T> Id<T> of(long id) {
-        return new Id<T>(id);
+        return new Id<>(id);
     }
 
     @Override

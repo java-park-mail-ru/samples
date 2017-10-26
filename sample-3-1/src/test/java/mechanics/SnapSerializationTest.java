@@ -3,6 +3,7 @@ package mechanics;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.mail.park.mechanics.GameSession;
@@ -32,8 +33,8 @@ public class SnapSerializationTest {
 
     @Before
     public void setUp() {
-        pupkin = new UserProfile("Pupkin", "");
-        dudkin = new UserProfile("Dudkin", "");
+        pupkin = new UserProfile("Pupkin");
+        dudkin = new UserProfile("Dudkin");
         nogibator = new GameUser(pupkin, new MechanicsTimeService());
         papkaPro = new GameUser(dudkin, new MechanicsTimeService());
     }
@@ -55,8 +56,7 @@ public class SnapSerializationTest {
         final ObjectMapper objectMapper = new ObjectMapper();
         final ClientSnap clientSnap = objectMapper.readValue(clientSnapStr, ClientSnap.class);
         final String clientSnapJson = objectMapper.writeValueAsString(clientSnap);
-        assert clientSnapJson != null;
-
+        Assert.assertNotNull(clientSnapJson);
     }
 
     @SuppressWarnings("OverlyBroadThrowsClause")
@@ -73,7 +73,7 @@ public class SnapSerializationTest {
     @Test
     public void serverInitTest() throws IOException {
         final InitGame.Request initGame = new InitGame.Request();
-        final UserProfile pupkin = new UserProfile("Pupkin", "");
+        final UserProfile pupkin = new UserProfile("Pupkin");
         final GameUser gameUser = new GameUser(pupkin, new MechanicsTimeService());
         final GameUser.ServerPlayerSnap serverPlayerSnap = this.nogibator.getSnap();
         final Map<Id<UserProfile>, String> names = ImmutableMap.of(
@@ -94,7 +94,7 @@ public class SnapSerializationTest {
         initGame.setBoard(initSquare(this.nogibator, this.papkaPro).getSnap());
         final ObjectMapper objectMapper = new ObjectMapper();
         final String initGameJson = objectMapper.writeValueAsString(initGame);
-        assert initGameJson != null;
+        Assert.assertNotNull(initGameJson);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class SnapSerializationTest {
         final Board square = initSquare(this.nogibator, this.papkaPro);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String squareJson = objectMapper.writeValueAsString(square.getSnap());
-        assert squareJson != null;
+        Assert.assertNotNull(squareJson);
     }
 
     private Board initSquare(GameUser user1, GameUser user2) {

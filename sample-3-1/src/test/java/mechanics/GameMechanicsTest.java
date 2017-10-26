@@ -60,8 +60,8 @@ public class GameMechanicsTest {
     @Before
     public void setUp () {
         when(remotePointService.isConnected(any())).thenReturn(true);
-        user1 = accountService.addUser("user1", "", "");
-        user2 = accountService.addUser("user2", "", "");
+        user1 = accountService.addUser("user1");
+        user2 = accountService.addUser("user2");
 
     }
 
@@ -106,6 +106,7 @@ public class GameMechanicsTest {
         startGame(user1.getId(), user2.getId());
     }
 
+    @SuppressWarnings("SameParameterValue")
     private ClientSnap createClientSnap(long frameTime, boolean firing, Coords mouse) {
         final ClientSnap clientSnap = new ClientSnap();
         clientSnap.setFrameTime(frameTime);

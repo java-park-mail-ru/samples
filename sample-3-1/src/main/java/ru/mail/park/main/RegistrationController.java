@@ -13,7 +13,6 @@ import ru.mail.park.services.AccountService;
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.Map;
 
 /**
  * Created by Solovyev on 06/09/16.
@@ -32,7 +31,6 @@ public class RegistrationController {
     public ResponseEntity guestLogin(@RequestBody RegistrationRequest body,
                                 HttpSession httpSession) {
         final String unsafeLogin = body.getLogin();
-        final String password = new BigInteger(130, new SecureRandom()).toString(32);
         if (StringUtils.isEmpty(unsafeLogin)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ImmutableMap.of("message", "Please enter nonempty name"));
         }
@@ -45,7 +43,7 @@ public class RegistrationController {
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ImmutableMap.of("message", "Sorry, this name had been taken by antoher player"));
         }
-        final UserProfile user = accountService.addUser(login, password, "");
+        final UserProfile user = accountService.addUser(login);
         httpSession.setAttribute("userId", user.getId().getId());
         return ResponseEntity.ok(new SuccessResponse(login));
     }

@@ -1,7 +1,6 @@
 package ru.mail.park.model;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -14,13 +13,10 @@ public class UserProfile {
     private final Id<UserProfile> id;
     @NotNull
     private String login;
-    @NotNull
-    private String passwordHash;
 
-    public UserProfile(@NotNull String login, @NotNull String password) {
+    public UserProfile(@NotNull String login) {
         id = Id.of(ID_GENERATOR.getAndIncrement());
         this.login = login;
-        this.passwordHash = password;
 
     }
 
@@ -32,11 +28,6 @@ public class UserProfile {
     @NotNull
     public String getLogin() {
         return login;
-    }
-
-    @NotNull
-    public String getPasswordHash() {
-        return passwordHash;
     }
 
     @Override

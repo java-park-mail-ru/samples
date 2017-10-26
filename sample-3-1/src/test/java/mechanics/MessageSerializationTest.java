@@ -1,6 +1,7 @@
 package mechanics;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class MessageSerializationTest {
         final JoinGame.Request request = new JoinGame.Request();
         final String requestJson = objectMapper.writeValueAsString(request);
         final Message fromJson = objectMapper.readValue(requestJson, Message.class);
-        assert fromJson instanceof JoinGame.Request;
+        Assert.assertTrue(fromJson instanceof JoinGame.Request);
     }
 
 }

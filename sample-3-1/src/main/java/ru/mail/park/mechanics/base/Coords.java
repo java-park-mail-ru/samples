@@ -17,11 +17,6 @@ public class Coords {
     public final double x;
     public final double y;
 
-    @NotNull
-    public Coords add(@NotNull Coords addition) {
-        return new Coords(x + addition.x, y + addition.y);
-    }
-
     @Override
     public String toString() {
         return '{' +

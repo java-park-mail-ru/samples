@@ -2,6 +2,7 @@ package ru.mail.park.mechanics.requests;
 
 import ru.mail.park.websocket.Message;
 
+@SuppressWarnings("unused")
 public class FinishGame extends Message {
     private Overcome overcome;
 

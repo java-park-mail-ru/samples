@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="js/jquery-3.1.1.min.js" type="application/javascript"></script>
+    <title>Technopark example: Shooter</title>
+    <style type="text/css">
+        #playground {
+            width: 900px;
+            height: 900px;
+            background-color: #888888;
+            border: 1px solid #222222;
+            cursor: url("images/crosshair.png") 49 49, crosshair;
+        }
+
+        #console-container {
+            float: left;
+            margin-left: 15px;
+            width: 300px;
+        }
+
+        #console {
+            border: 1px solid #CCCCCC;
+            border-right-color: #999999;
+            border-bottom-color: #999999;
+            height: 480px;
+            overflow-y: scroll;
+            padding-left: 5px;
+            padding-right: 5px;
+            width: 100%;
+        }
+
+        #console p {
+            padding: 0;
+            margin: 0;
+        }
+
+        .service-info {
+            float: left;
+            margin-left: 15px;
+        }
+        .service-info div {
+            display: inline-block;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets rely on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+
+<div style="float: left">
+    <canvas id="playground" width="900" height="900"></canvas>
+</div>
+<div id="console-container">
+    <div id="console"></div>
+</div>
+<div class="service-info">
+    <div >
+        <span id="my_name"></span>
+
+        <span id="my_scores"
+             style="font-size: large; color:#824D6E; font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif"></span>
+    </div>
+    <div >
+        <span id="enemy_name"></span>
+
+        <span id="enemy_scores"
+             style="font-size: large; color:#824D6E; font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif"></span>
+    </div>
+</div>
+<script type="text/javascript" src="js/messaging.js"></script>
+<script type="text/javascript" src="js/game.js"></script>
+</body>
+</html>

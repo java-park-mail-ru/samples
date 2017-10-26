@@ -10,6 +10,7 @@ import ru.mail.park.mechanics.internal.Shuffler;
 import ru.mail.park.model.Id;
 import ru.mail.park.model.UserProfile;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -86,7 +87,7 @@ public class GameSession {
 
     @NotNull
     public List<GameUser> getPlayers() {
-        return List.of(first, second);
+        return Arrays.asList(first, second);
     }
 
     public void terminateSession() {

@@ -1,5 +1,6 @@
 package ru.mail.park.main;
 
+import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class RegistrationController {
         final String unsafeLogin = body.getLogin();
         final String password = new BigInteger(130, new SecureRandom()).toString(32);
         if (StringUtils.isEmpty(unsafeLogin)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Please enter nonempty name"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ImmutableMap.of("message", "Please enter nonempty name"));
         }
         final String login = HtmlUtils.htmlEscape(unsafeLogin);
         final UserProfile existingUser = accountService.getUserByName(login);
@@ -42,7 +43,7 @@ public class RegistrationController {
             if (Long.valueOf(existingUser.getId().getId()).equals(previousId)) {
                 return ResponseEntity.ok(new SuccessResponse(login));
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Sorry, this name had been taken by antoher player"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ImmutableMap.of("message", "Sorry, this name had been taken by antoher player"));
         }
         final UserProfile user = accountService.addUser(login, password, "");
         httpSession.setAttribute("userId", user.getId().getId());

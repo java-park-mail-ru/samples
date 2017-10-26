@@ -2,6 +2,7 @@ package mechanics;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import ru.mail.park.mechanics.GameSession;
@@ -75,13 +76,13 @@ public class SnapSerializationTest {
         final UserProfile pupkin = new UserProfile("Pupkin", "");
         final GameUser gameUser = new GameUser(pupkin, new MechanicsTimeService());
         final GameUser.ServerPlayerSnap serverPlayerSnap = this.nogibator.getSnap();
-        final Map<Id<UserProfile>, String> names = Map.of(
+        final Map<Id<UserProfile>, String> names = ImmutableMap.of(
                 this.nogibator.getUserId(), this.pupkin.getLogin(),
                 this.papkaPro.getUserId(), this.dudkin.getLogin());
-        final Map<Id<UserProfile>, String> colors = Map.of(
+        final Map<Id<UserProfile>, String> colors = ImmutableMap.of(
                 this.nogibator.getUserId(), "#aaaaaa",
                 this.papkaPro.getUserId(), "#cccccc");
-        final  Map<Id<UserProfile>, GameUser.ServerPlayerSnap> players = Map.of(
+        final  Map<Id<UserProfile>, GameUser.ServerPlayerSnap> players = ImmutableMap.of(
                 this.nogibator.getUserId(), this.nogibator.getSnap(),
                 this.papkaPro.getUserId(), this.nogibator.getSnap()
         );

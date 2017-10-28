@@ -1,4 +1,4 @@
-package mechanics;
+package ru.mail.park.mechanics;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

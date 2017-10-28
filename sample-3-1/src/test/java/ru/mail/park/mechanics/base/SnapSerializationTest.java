@@ -1,4 +1,5 @@
-package mechanics;
+package ru.mail.park.mechanics.base;
+
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @SuppressWarnings("MagicNumber")
 public class SnapSerializationTest {
-
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private GameUser nogibator;
     private GameUser papkaPro;
@@ -53,7 +54,7 @@ public class SnapSerializationTest {
                         "\"class\":\"ClientSnap\"," +
                         "\"frameTime\":\"32\"" +
                     '}';
-        final ObjectMapper objectMapper = new ObjectMapper();
+
         final ClientSnap clientSnap = objectMapper.readValue(clientSnapStr, ClientSnap.class);
         final String clientSnapJson = objectMapper.writeValueAsString(clientSnap);
         Assert.assertNotNull(clientSnapJson);
@@ -64,7 +65,6 @@ public class SnapSerializationTest {
     public void serverSnapTest() throws IOException {
         final GameUser.ServerPlayerSnap serverPlayerSnap = new GameUser.ServerPlayerSnap();
         serverPlayerSnap.setUserId(Id.of(4));
-        final ObjectMapper objectMapper = new ObjectMapper();
         final String result = objectMapper.writeValueAsString(serverPlayerSnap);
         objectMapper.readValue(result, GameUser.ServerPlayerSnap.class);
     }
@@ -92,7 +92,6 @@ public class SnapSerializationTest {
         initGame.setEnemy(gameUser.getUserId());
         initGame.setNames(names);
         initGame.setBoard(initSquare(this.nogibator, this.papkaPro).getSnap());
-        final ObjectMapper objectMapper = new ObjectMapper();
         final String initGameJson = objectMapper.writeValueAsString(initGame);
         Assert.assertNotNull(initGameJson);
     }
@@ -100,7 +99,6 @@ public class SnapSerializationTest {
     @Test
     public void snapTest() throws JsonProcessingException {
         final Board square = initSquare(this.nogibator, this.papkaPro);
-        final ObjectMapper objectMapper = new ObjectMapper();
         final String squareJson = objectMapper.writeValueAsString(square.getSnap());
         Assert.assertNotNull(squareJson);
     }

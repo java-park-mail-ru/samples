@@ -11,9 +11,6 @@ import java.time.Clock;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-/**
- * Created by Solovyev on 01/11/2016.
- */
 @Service
 public class MechanicsExecutor implements Runnable {
     @NotNull
@@ -40,34 +37,39 @@ public class MechanicsExecutor implements Runnable {
 
     @Override
     public void run() {
-        //noinspection InfiniteLoopStatement
-        long lastFrameMillis = STEP_TIME;
         try {
-        while (true) {
-            final long before = clock.millis();
-
-            gameMechanics.gmStep(lastFrameMillis);
-
-            final long after = clock.millis();
-            try {
-                final long sleepingTime = Math.max(0, STEP_TIME - (after - before));
-                Thread.sleep(sleepingTime);
-            } catch (InterruptedException e) {
-                LOGGER.error("Mechanics thread was interrupted", e);
-            }
-
-            if (Thread.currentThread().isInterrupted()) {
-                gameMechanics.reset();
-                return;
-            }
-            final long afterSleep = clock.millis();
-            lastFrameMillis = afterSleep - before;
-        }
-        } catch(Throwable e) {
-            LOGGER.error("Mechanics executor was terminated due to exception", e);
-            throw e;
+            mainCycle();
         } finally {
             LOGGER.warn("Mechanic executor terminated");
+        }
+    }
+
+    private void mainCycle() {
+        long lastFrameMillis = STEP_TIME;
+        while (true) {
+            try {
+                final long before = clock.millis();
+
+                gameMechanics.gmStep(lastFrameMillis);
+
+                final long after = clock.millis();
+                try {
+                    final long sleepingTime = Math.max(0, STEP_TIME - (after - before));
+                    Thread.sleep(sleepingTime);
+                } catch (InterruptedException e) {
+                    LOGGER.error("Mechanics thread was interrupted", e);
+                }
+
+                if (Thread.currentThread().isInterrupted()) {
+                    gameMechanics.reset();
+                    return;
+                }
+                final long afterSleep = clock.millis();
+                lastFrameMillis = afterSleep - before;
+            } catch (RuntimeException e) {
+                LOGGER.error("Mechanics executor was reseted due to exception", e);
+                gameMechanics.reset();
+            }
         }
     }
 }

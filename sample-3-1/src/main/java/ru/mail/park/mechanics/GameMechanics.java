@@ -5,9 +5,6 @@ import ru.mail.park.mechanics.base.ClientSnap;
 import ru.mail.park.model.Id;
 import ru.mail.park.model.UserProfile;
 
-/**
- * @author k.solovyev
- */
 public interface GameMechanics {
 
     void addClientSnapshot(@NotNull Id<UserProfile> userId, @NotNull ClientSnap clientSnap);

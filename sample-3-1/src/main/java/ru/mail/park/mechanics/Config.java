@@ -1,7 +1,7 @@
 package ru.mail.park.mechanics;
 
 public class Config {
-    public static final int SQUARE_SIZE = 300;
+    public static final int SQUARE_SIZE = 250;
 
     public static final int SQUARES_COUNT = 9;
     public static final int SQUARES_IN_A_ROW = 3;

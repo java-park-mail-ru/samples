@@ -20,6 +20,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class GameSession {
     private static final AtomicLong ID_GENERATOR = new AtomicLong(0);
+    private boolean isFinished;
+
     @NotNull
     private final Id<GameSession> sessionId;
     @NotNull
@@ -40,8 +42,8 @@ public class GameSession {
         this.sessionId = Id.of(ID_GENERATOR.getAndIncrement());
         this.first = new GameUser(user1, mechanicsTimeService);
         this.second =  new GameUser(user2, mechanicsTimeService);
-        board = new Board(this, shuffler);
-
+        this.board = new Board(this, shuffler);
+        this.isFinished = false;
     }
 
     @NotNull
@@ -90,6 +92,14 @@ public class GameSession {
         return Arrays.asList(first, second);
     }
 
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished() {
+        isFinished = true;
+    }
+
     public void terminateSession() {
         gameSessionService.forceTerminate(this, true);
     }
@@ -112,6 +122,7 @@ public class GameSession {
         if (first.claimPart(MechanicPart.class).getScore() >= Config.SCORES_TO_WIN
                 || second.claimPart(MechanicPart.class).getScore() >= Config.SCORES_TO_WIN) {
             gameSessionService.finishGame(this);
+            isFinished = true;
             return true;
         }
         return false;

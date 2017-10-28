@@ -34,7 +34,7 @@ public class ClientSnapHandler extends MessageHandler<ClientSnap> {
     }
 
     @Override
-    public void handle(@NotNull ClientSnap message, @NotNull Id<UserProfile> forUser) throws HandleException {
+    public void handle(@NotNull ClientSnap message, @NotNull Id<UserProfile> forUser) {
         gameMechanics.addClientSnapshot(forUser, message);
     }
 }

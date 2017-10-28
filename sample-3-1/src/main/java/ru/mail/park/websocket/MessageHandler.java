@@ -5,9 +5,6 @@ import ru.mail.park.model.Id;
 import ru.mail.park.model.UserProfile;
 
 
-/**
- * Created by Solovyev on 06/04/16.
- */
 public abstract class MessageHandler<T extends Message> {
     @NotNull
     private final Class<T> clazz;

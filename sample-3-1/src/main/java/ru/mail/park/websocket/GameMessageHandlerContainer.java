@@ -10,12 +10,8 @@ import ru.mail.park.model.UserProfile;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Solovyev on 06/04/16.
- */
 @Service
 public class GameMessageHandlerContainer implements MessageHandlerContainer {
-    @SuppressWarnings("ConstantConditions")
     @NotNull
     private static final Logger LOGGER = LoggerFactory.getLogger(GameMessageHandlerContainer.class);
     final Map<Class<?>, MessageHandler<?>> handlerMap = new HashMap<>();

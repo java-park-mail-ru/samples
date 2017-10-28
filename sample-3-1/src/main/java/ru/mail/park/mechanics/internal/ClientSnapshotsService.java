@@ -60,8 +60,11 @@ public class ClientSnapshotsService {
         gameUser.claimPart(MousePart.class).setMouse(mouse);
     }
 
+    public void clearForUser(Id<UserProfile> userProfileId) {
+        snaps.remove(userProfileId);
+    }
 
-    public void clear() {
+    public void reset() {
         snaps.clear();
     }
 }

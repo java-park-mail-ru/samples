@@ -83,7 +83,7 @@ public class GameMechanicsTest {
             return null;
         }).when(shuffler).shuffle(any());
         final GameSession gameSession = startGame(user1.getId(), user2.getId());
-        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25,true, Coords.of(750,750)));
+        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25,true, Coords.of(Config.SQUARE_SIZE * 5 / 2 ,Config.SQUARE_SIZE * 5 / 2)));
         gameMechanics.gmStep(100);
         Assert.assertEquals(1, gameSession.getSecond().claimPart(MechanicPart.class).getScore());
     }

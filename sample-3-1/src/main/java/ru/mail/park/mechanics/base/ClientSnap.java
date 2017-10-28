@@ -7,7 +7,7 @@ import ru.mail.park.websocket.Message;
 /**
  * Created by Solovyev on 03/11/2016.
  */
-@SuppressWarnings({"NullableProblems", "unused"})
+@SuppressWarnings({"NullableProblems"})
 public class ClientSnap extends Message {
 
     @NotNull

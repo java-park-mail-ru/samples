@@ -6,7 +6,6 @@ import ru.mail.park.mechanics.game.GamePart;
 import ru.mail.park.mechanics.game.Snap;
 import ru.mail.park.mechanics.internal.MechanicsTimeService;
 
-@SuppressWarnings("unused")
 public class MechanicPart implements GamePart {
     private int score;
     private boolean isFiring;

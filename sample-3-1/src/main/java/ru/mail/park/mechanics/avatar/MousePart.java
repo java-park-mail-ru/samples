@@ -5,7 +5,6 @@ import ru.mail.park.mechanics.base.Coords;
 import ru.mail.park.mechanics.game.GamePart;
 import ru.mail.park.mechanics.game.Snap;
 
-@SuppressWarnings("unused")
 public class MousePart implements GamePart {
     @NotNull
     private Coords mouse;

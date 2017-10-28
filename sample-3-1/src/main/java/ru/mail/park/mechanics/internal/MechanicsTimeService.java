@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 public class MechanicsTimeService {
     private long millis = 0;
 
+    public void reset() {
+        millis = 0;
+    }
 
     public void tick(long delta) {
         millis += delta;

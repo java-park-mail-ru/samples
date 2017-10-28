@@ -36,10 +36,13 @@ public class GameTaskScheduler {
 
         Map.Entry<Long, ScheduledTask> entry;
         while ((entry = scheduledTasks.headMap(now, true).pollFirstEntry()) != null) {
-            entry.getValue().operate();
+            performOperation(entry.getValue());
         }
     }
 
+    public void reset() {
+        scheduledTasks.clear();
+    }
 
     private static void performOperation(@NotNull ScheduledTask task) {
         try {

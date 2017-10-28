@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.CloseStatus;
 import ru.mail.park.mechanics.base.ClientSnap;
 import ru.mail.park.mechanics.internal.*;
 import ru.mail.park.model.Id;
@@ -17,7 +18,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * @author k.solovyev
  */
-@SuppressWarnings({"unused", "FieldMayBeFinal"})
 @Service
 public class GameMechanicsImpl implements GameMechanics {
     @NotNull
@@ -48,18 +48,19 @@ public class GameMechanicsImpl implements GameMechanics {
     private final GameTaskScheduler gameTaskScheduler;
 
     @NotNull
-    private Set<Id<UserProfile>> playingUsers = new HashSet<>();
-
-    @NotNull
     private ConcurrentLinkedQueue<Id<UserProfile>> waiters = new ConcurrentLinkedQueue<>();
 
     @NotNull
     private final Queue<Runnable> tasks = new ConcurrentLinkedQueue<>();
 
-    @SuppressWarnings("LongLine")
-    public GameMechanicsImpl(@NotNull AccountService accountService, @NotNull ClientSnapshotsService clientSnapshotsService, @NotNull ServerSnapshotService serverSnapshotService,
-                             @NotNull RemotePointService remotePointService, @NotNull PullTheTriggerService pullTheTriggerService,
-                             @NotNull GameSessionService gameSessionService, @NotNull MechanicsTimeService timeService, @NotNull GameTaskScheduler gameTaskScheduler) {
+    public GameMechanicsImpl(@NotNull AccountService accountService,
+                             @NotNull ClientSnapshotsService clientSnapshotsService,
+                             @NotNull ServerSnapshotService serverSnapshotService,
+                             @NotNull RemotePointService remotePointService,
+                             @NotNull PullTheTriggerService pullTheTriggerService,
+                             @NotNull GameSessionService gameSessionService,
+                             @NotNull MechanicsTimeService timeService,
+                             @NotNull GameTaskScheduler gameTaskScheduler) {
         this.accountService = accountService;
         this.clientSnapshotsService = clientSnapshotsService;
         this.serverSnapshotService = serverSnapshotService;
@@ -129,17 +130,16 @@ public class GameMechanicsImpl implements GameMechanics {
 
         gameTaskScheduler.tick();
 
-        final Iterator<GameSession> iterator = gameSessionService.getSessions().iterator();
         final List<GameSession> sessionsToTerminate = new ArrayList<>();
-        while (iterator.hasNext()) {
-            final GameSession session = iterator.next();
+        final List<GameSession> sessionsToFinish = new ArrayList<>();
+        for (GameSession session : gameSessionService.getSessions()) {
             if (session.tryFinishGame()) {
-                gameSessionService.forceTerminate(session, false);
+                sessionsToFinish.add(session);
                 continue;
             }
 
             if (!gameSessionService.checkHealthState(session)) {
-                gameSessionService.forceTerminate(session, true);
+                sessionsToTerminate.add(session);
                 continue;
             }
 
@@ -152,14 +152,23 @@ public class GameMechanicsImpl implements GameMechanics {
             pullTheTriggerService.pullTheTriggers(session);
         }
         sessionsToTerminate.forEach(session -> gameSessionService.forceTerminate(session, true));
+        sessionsToFinish.forEach(session -> gameSessionService.forceTerminate(session, false));
 
         tryStartGames();
-        clientSnapshotsService.clear();
+        clientSnapshotsService.reset();
         timeService.tick(frameTime);
     }
 
     @Override
     public void reset() {
-
+        for (GameSession session : gameSessionService.getSessions()) {
+            gameSessionService.forceTerminate(session, true);
+        }
+        waiters.forEach(user -> remotePointService.cutDownConnection(user, CloseStatus.SERVER_ERROR));
+        waiters.clear();
+        tasks.clear();
+        clientSnapshotsService.reset();
+        timeService.reset();
+        gameTaskScheduler.reset();
     }
 }

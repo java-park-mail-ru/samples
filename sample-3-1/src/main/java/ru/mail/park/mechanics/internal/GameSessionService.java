@@ -39,16 +39,22 @@ public class GameSessionService {
     private final GameTaskScheduler gameTaskScheduler;
 
     @NotNull
+    private final ClientSnapshotsService clientSnapshotsService;
+
+    @NotNull
     private final Shuffler shuffler;
 
     public GameSessionService(@NotNull RemotePointService remotePointService,
                               @NotNull MechanicsTimeService timeService,
                               @NotNull GameInitService gameInitService,
-                              @NotNull GameTaskScheduler gameTaskScheduler, @NotNull Shuffler shuffler) {
+                              @NotNull GameTaskScheduler gameTaskScheduler,
+                              @NotNull ClientSnapshotsService clientSnapshotsService,
+                              @NotNull Shuffler shuffler) {
         this.remotePointService = remotePointService;
         this.timeService = timeService;
         this.gameInitService = gameInitService;
         this.gameTaskScheduler = gameTaskScheduler;
+        this.clientSnapshotsService = clientSnapshotsService;
         this.shuffler = shuffler;
     }
 
@@ -67,6 +73,7 @@ public class GameSessionService {
 
     public void forceTerminate(@NotNull GameSession gameSession, boolean error) {
         final boolean exists = gameSessions.remove(gameSession);
+        gameSession.setFinished();
         usersMap.remove(gameSession.getFirst().getUserId());
         usersMap.remove(gameSession.getSecond().getUserId());
         final CloseStatus status = error ? CloseStatus.SERVER_ERROR : CloseStatus.NORMAL;
@@ -74,7 +81,11 @@ public class GameSessionService {
             remotePointService.cutDownConnection(gameSession.getFirst().getUserId(), status);
             remotePointService.cutDownConnection(gameSession.getSecond().getUserId(), status);
         }
-        LOGGER.info("Game session " + gameSession.getSessionId() + " terminated. " + gameSession.toString());
+        clientSnapshotsService.clearForUser(gameSession.getFirst().getUserId());
+        clientSnapshotsService.clearForUser(gameSession.getSecond().getUserId());
+
+        LOGGER.info("Game session " + gameSession.getSessionId() + (error ? " was terminated due to error. " : " was cleaned. ")
+                + gameSession.toString());
     }
 
     public boolean checkHealthState(@NotNull GameSession gameSession) {
@@ -93,10 +104,11 @@ public class GameSessionService {
     }
 
     public void finishGame(@NotNull GameSession gameSession) {
-        FinishGame.Overcome firstOvercome;
-        FinishGame.Overcome secondOvercome;
-        int firstScore = gameSession.getFirst().claimPart(MechanicPart.class).getScore();
-        int secondScore = gameSession.getSecond().claimPart(MechanicPart.class).getScore();
+        gameSession.setFinished();
+        final FinishGame.Overcome firstOvercome;
+        final FinishGame.Overcome secondOvercome;
+        final int firstScore = gameSession.getFirst().claimPart(MechanicPart.class).getScore();
+        final int secondScore = gameSession.getSecond().claimPart(MechanicPart.class).getScore();
         if (firstScore == secondScore) {
             firstOvercome = FinishGame.Overcome.DRAW;
             secondOvercome = FinishGame.Overcome.DRAW;
@@ -136,6 +148,9 @@ public class GameSessionService {
 
         @Override
         public void operate() {
+            if (getGameSession().isFinished()) {
+                return;
+            }
             getGameSession().getBoard().randomSwap();
             final long newDelay = Math.max(currentDelay - Config.SWITCH_DELTA, Config.SWITCH_DELAY_MIN);
             gameTaskScheduler.schedule(newDelay,

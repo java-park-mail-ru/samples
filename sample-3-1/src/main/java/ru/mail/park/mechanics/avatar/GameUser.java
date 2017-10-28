@@ -36,7 +36,6 @@ public class GameUser extends GameObject {
         return ServerPlayerSnap.snapPlayer(this);
     }
 
-    @SuppressWarnings("unused")
     public static class ServerPlayerSnap implements Snap<GameUser> {
         private Id<UserProfile> userId;
 

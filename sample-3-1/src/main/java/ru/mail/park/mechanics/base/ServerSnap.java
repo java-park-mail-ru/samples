@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Solovyev on 03/11/2016.
  */
-@SuppressWarnings({"NullableProblems", "unused"})
+@SuppressWarnings({"NullableProblems"})
 public class ServerSnap extends Message {
 
     @NotNull private List<GameUser.ServerPlayerSnap> players;

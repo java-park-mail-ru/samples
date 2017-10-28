@@ -9,7 +9,6 @@ import ru.mail.park.websocket.Message;
 import java.util.Map;
 
 public class InitGame{
-    @SuppressWarnings("unused")
     public static final class Request extends Message {
         private Id<UserProfile> self;
         private Id<UserProfile> enemy;

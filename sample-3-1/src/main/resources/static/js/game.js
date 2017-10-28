@@ -20,8 +20,9 @@ Game.crossFatness = 4;
 Game.crossSize = 40;
 Game.bulletSize = 30;
 Game.maxBulletsCount = 15;
+Game.bulletSpread = 50;
 
-Game.rectSize = 300;
+Game.rectSize = 250;
 Game.rectInARow = 3;
 Game.emptyRect = "#666666";
 Game.userRect = "#669900";
@@ -30,6 +31,7 @@ Game.enemyRect = "#b30000";
 function ClientSnap() {
     this.mouse = {x: 0.0, y: 0.0};
     this.isFiring = false;
+    // noinspection JSUnusedGlobalSymbols
     this.frameTime = 0;
 }
 
@@ -211,7 +213,7 @@ Game.stopGameLoop = function () {
 
 Game.draw = function () {
     var context = this.context;
-    this.context.clearRect(0, 0, 900, 900);
+    this.context.clearRect(0, 0, Game.rectSize * Game.rectInARow, Game.rectSize * Game.rectInARow);
     Game.board.draw(context);
     for (var id in this.players) {
         if (id != Game.userId) {
@@ -328,7 +330,9 @@ Game.updateObjects = function(frameTime) {
             for (i = 0; i < serverSnap.players.length; i++) {
                 player = serverSnap.players[i];
                 if (player.isFiring) {
-                    Game.addBullet(player.mouse.x, player.mouse.y, Resources.bulletRotator.nextImg())
+                    var bulletX = player.mouse.x + Math.random() * Game.bulletSpread - Game.bulletSpread / 2;
+                    var bulletY = player.mouse.y + Math.random() * Game.bulletSpread - Game.bulletSpread / 2;
+                    Game.addBullet(bulletX, bulletY, Resources.bulletRotator.nextImg())
                 }
             }
             moveTime -= moveTimeOnSnap;
@@ -427,8 +431,12 @@ Game.connect = (function () {
         }
     };
 
-    Game.socket.onclose = function () {
-        Console.log('Info: WebSocket closed.');
+    Game.socket.onclose = function (event) {
+        if (event.wasClean && event.code === 1000) {
+            Console.log('Info: Web socket session is over');
+            return;
+        }
+        Console.log('Error: WebSocket was unexpectedly closed. Code: ' + event.code + '. Reason: "' + event.reason+'"');
         Game.stopGameLoop();
     };
 

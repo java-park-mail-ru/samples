@@ -6,18 +6,17 @@
     <script src="js/jquery-3.1.1.min.js" type="application/javascript"></script>
     <title>Technopark example: Shooter</title>
     <style type="text/css">
+        @font-face {
+            font-family: Parkshooter;
+            src: local("Parkshooter"),
+            url(fonts/west.ttf);
+        }
+
         #playground {
-            width: 900px;
-            height: 900px;
+            display: block;
             background-color: #888888;
             border: 1px solid #222222;
             cursor: url("images/crosshair.png") 49 49, crosshair;
-        }
-
-        #console-container {
-            float: left;
-            margin-left: 15px;
-            width: 300px;
         }
 
         #console {
@@ -26,9 +25,8 @@
             border-bottom-color: #999999;
             height: 480px;
             overflow-y: scroll;
-            padding-left: 5px;
-            padding-right: 5px;
-            width: 100%;
+            margin: 10px auto;
+            width: 750px;
         }
 
         #console p {
@@ -38,11 +36,48 @@
 
         .service-info {
             float: left;
-            margin-left: 15px;
+            margin: 0px 15px;
         }
+
         .service-info div {
-            display: inline-block;
-            margin-left: 5px;
+            padding: 10px 0px;
+        }
+
+        .service-info span {
+            font-size: large;
+            font-family: Parkshooter, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+        }
+
+        #enemy_scores, #my_scores {
+            border-radius: 4px;
+            border: #444444 solid 1px;
+            background-color: black;
+            color: wheat;
+            padding: 0px 10px
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .left {
+            float: left;
+            width: 100px;
+        }
+
+        .center {
+            margin: 0 auto;
+            width: 750px;
+        }
+
+        .right {
+            float: right;
+            width: 100px;
+        }
+
+        .clear:after {
+            content: "";
+            clear: both;
         }
     </style>
 </head>
@@ -51,24 +86,34 @@
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
 
-<div style="float: left">
-    <canvas id="playground" width="900" height="900"></canvas>
-</div>
-<div id="console-container">
-    <div id="console"></div>
-</div>
-<div class="service-info">
-    <div >
-        <span id="my_name"></span>
+<div class="container">
 
-        <span id="my_scores"
-             style="font-size: large; color:#824D6E; font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif"></span>
+    <div class="service-info left">
+        <div>
+            <span id="my_name"></span>
+        </div>
+
+        <div>
+            <span>SCORE:<span id="my_scores"></span></span>
+
+        </div>
+
     </div>
-    <div >
-        <span id="enemy_name"></span>
+    <div class="service-info right ">
+        <div>
+            <span id="enemy_name"></span>
+        </div>
+        <div>
+            <span>SCORE:<span id="enemy_scores"></span></span>
 
-        <span id="enemy_scores"
-             style="font-size: large; color:#824D6E; font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif"></span>
+        </div>
+    </div>
+    <div class="center clear">
+        <canvas id="playground" width="750px" height="750px"/>
+    </div>
+
+    <div id="console-container" class="center">
+        <div id="console"></div>
     </div>
 </div>
 <script type="text/javascript" src="js/messaging.js"></script>

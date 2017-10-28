@@ -26,7 +26,6 @@ public class Square extends GameObject {
         return new SquareSnap(this);
     }
 
-    @SuppressWarnings("unused")
     public static final class SquareSnap implements Snap<Square> {
 
         @Nullable

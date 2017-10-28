@@ -34,7 +34,7 @@ public class JoinGameHandler extends MessageHandler<JoinGame.Request> {
     }
 
     @Override
-    public void handle(@NotNull JoinGame.Request message, @NotNull Id<UserProfile> forUser) throws HandleException {
+    public void handle(@NotNull JoinGame.Request message, @NotNull Id<UserProfile> forUser) {
         gameMechanics.addUser(forUser);
     }
 }

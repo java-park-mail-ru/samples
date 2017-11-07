@@ -1,4 +1,7 @@
+sudo: required
 services:
+  #for sample-extras/samples-testcontainers
+  - docker
   - postgresql
 before_script:
   - psql -c "create user sample22plain with password 'sample22plain';" -U postgres

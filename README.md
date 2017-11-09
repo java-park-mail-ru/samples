@@ -10,8 +10,10 @@
 
 Некоторые примеры требуют внешних зависимостей (СУБД) - как они настраиваются можно посмотреть в .travis.yml
 Некоторые примеры имеют свои краткие README:
-- [Sample 2-1](sample-2-1/README.md)
-- [Sample 2-2](sample-2-2/README.md)
+- [Пример 2-1](sample-2-1/README.md)
+- [Пример 2-2](sample-2-2/README.md)
+- [Внепрограммный пример про JMH](sample-extras/sample-jmh/README.md)
+- [Внепрограммный пример про Testcontainers](sample-extras/sample-testcontainers/README.md)
 
 Если вы нашли ошибку в любом примере, или считаете что его можно улучшить - открывайте PR или issue.
 

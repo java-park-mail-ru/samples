@@ -1,0 +1,22 @@
+{
+  "type": "Mage$MageResource",
+  "maxMana": 200,
+  "maxHealth": 75,
+  "spells":[
+    {
+      "type": "HealthGainSpell",
+      "healthGain": 35,
+      "manaCost": 40
+    },
+    {
+      "type": "ManaGainSpell",
+      "manaGain": 50,
+      "manaCost": 45
+    },
+    {
+      "type": "HealthGainSpell",
+      "healthGain": -18,
+      "manaCost": 0
+    }
+  ]
+}

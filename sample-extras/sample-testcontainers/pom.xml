@@ -44,7 +44,7 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>1.4.3</version>
+			<version>1.5.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

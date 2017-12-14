@@ -11,5 +11,6 @@
 	<modules>
 		<module>sample-testcontainers</module>
 		<module>sample-jmh</module>
+		<module>sample-jcstress</module>
 	</modules>
 </project>

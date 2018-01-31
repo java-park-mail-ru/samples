@@ -1,4 +1,6 @@
 sudo: required
+addons:
+  postgresql: "9.6"
 services:
   #for sample-extras/samples-testcontainers
   - docker

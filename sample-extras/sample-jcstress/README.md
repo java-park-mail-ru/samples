@@ -1,1 +1,0 @@
-Пример выходящий за программу курса (разбираться в нем необязательно) - про [Jcstress](http://openjdk.java.net/projects/code-tools/jcstress/) с использованием [популярной статьи про трудности многопоточности](https://shipilev.net/blog/archive/settable-future/).

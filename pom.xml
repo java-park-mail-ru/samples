@@ -10,11 +10,5 @@
 
 	<modules>
 		<module>sample-1-2</module>
-		<module>sample-2-1</module>
-		<module>sample-2-2</module>
-		<module>sample-2-3</module>
-		<module>sample-3-1</module>
-		<module>sample-3-2</module>
-		<module>sample-extras</module>
 	</modules>
 </project>

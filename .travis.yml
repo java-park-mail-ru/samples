@@ -2,8 +2,6 @@ sudo: required
 addons:
   postgresql: "9.6"
 services:
-  #for sample-extras/samples-testcontainers
-  - docker
   - postgresql
 before_script:
   - psql -c "create user sample22plain with password 'sample22plain';" -U postgres

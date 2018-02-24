@@ -38,7 +38,7 @@ public class SimpleController {
     }
 
     /**
-     * Объект класса будет автоматически преобразован в JSON при записи тела ответа
+     * Объект класса будет автоматически преобразован в JSON при записи тела ответа.
      */
     @SuppressWarnings("unused")
     public static class Message {
@@ -49,7 +49,7 @@ public class SimpleController {
         }
 
         /**
-         *  Метод нужен для воссоздания объекта из json
+         *  Метод нужен для воссоздания объекта из json.
          */
         public Message() {
         }
@@ -63,7 +63,7 @@ public class SimpleController {
         }
 
         /**
-         *  Метод нужен для воссоздания объекта из json
+         *  Метод нужен для воссоздания объекта из json.
          */
         public void setMessage(String message) {
             this.message = message;

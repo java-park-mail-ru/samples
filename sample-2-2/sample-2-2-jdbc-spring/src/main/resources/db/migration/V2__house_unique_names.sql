@@ -1,0 +1,1 @@
+ALTER TABLE house ADD CONSTRAINT house_name_uq UNIQUE (name);

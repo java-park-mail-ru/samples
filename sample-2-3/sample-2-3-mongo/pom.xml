@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ru.mail.park.java</groupId>
-	<artifactId>sample-2-2-jdbc-spring</artifactId>
+	<artifactId>sample-2-3-mongo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>sample-2-2-jdbc-spring</name>
-	<description>Пример для лекции 2.2 - базовые сведения для работы с JDBC через Spring</description>
+	<name>sample-2-3-mongo</name>
+	<description>Пример для лекции 2.3 - MongoDB</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -25,7 +25,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -33,16 +33,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
+			<groupId>de.flapdoodle.embed</groupId>
+			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -103,5 +96,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
 
 </project>

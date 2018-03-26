@@ -27,13 +27,13 @@ class GameControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void testMeRequiresLogin() {
+    void testMeRequiresLogin() {
         final ResponseEntity<User> meResp = testRestTemplate.getForEntity("/me", User.class);
         assertEquals(HttpStatus.UNAUTHORIZED, meResp.getStatusCode());
     }
 
     @Test
-    public void testLogin() {
+    void testLogin() {
         login();
     }
 
@@ -54,7 +54,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void testMe() {
+    void testMe() {
         final List<String> cookies = login();
 
         final HttpHeaders requestHeaders = new HttpHeaders();

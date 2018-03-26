@@ -9,7 +9,7 @@ public abstract class SampleController {
 
 	private final SampleDao dao;
 
-	public SampleController(SampleDao dao) {
+	SampleController(SampleDao dao) {
 		this.dao = dao;
 	}
 

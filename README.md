@@ -10,6 +10,7 @@
 
 Презентации лекций:
 - [1.1](https://yadi.sk/i/aqJhx9l63SYscs)
+- [1.2](https://yadi.sk/d/T0jSRAmS3SizHQ)
 - [2.2](https://cloud.mail.ru/public/41uQ/QrRmnUifn)
 
 Если вы нашли ошибку в любом примере, или считаете что его можно улучшить - открывайте PR или issue.

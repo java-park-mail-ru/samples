@@ -11,7 +11,8 @@
 Презентации лекций:
 - [1.1](https://yadi.sk/i/aqJhx9l63SYscs)
 - [1.2](https://yadi.sk/d/T0jSRAmS3SizHQ)
+- [2.1](https://cloud.mail.ru/public/DDCF/kpeVANK7q)
 - [2.2](https://cloud.mail.ru/public/41uQ/QrRmnUifn)
-- [2.3](https://ru.surveymonkey.com/r/NKFBDWL) (Слайды за отзыв о лекции)
+- [2.3](https://cloud.mail.ru/public/DCJz/wvyGMH2AM)
 
 Если вы нашли ошибку в любом примере, или считаете что его можно улучшить - открывайте PR или issue.

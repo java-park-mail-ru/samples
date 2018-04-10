@@ -1,7 +1,6 @@
 language: java
 jdk:
   - oraclejdk9
-sudo: required
 addons:
   postgresql: "9.6"
 services:

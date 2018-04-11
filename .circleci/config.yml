@@ -11,6 +11,10 @@ jobs:
 
       - checkout
 
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run: sudo apt-get install postgresql-client
+
       - run: ./.ci/prepare_postgres.sh
 
       - restore_cache:

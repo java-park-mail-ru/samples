@@ -11,7 +11,7 @@ jobs:
 
       - checkout
 
-      - ./.ci/prepare_postgres.sh
+      - run: ./.ci/prepare_postgres.sh
 
       - restore_cache:
           keys:

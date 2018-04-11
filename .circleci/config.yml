@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:9-jdk
+      - image: circleci/postgres:latest
+    working_directory: ~/repo
+    environment:
+      MAVEN_OPTS: -Xmx1200m
+    steps:
+
+      - checkout
+
+      - ./.ci/prepare_postgres.sh
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "pom.xml" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: ./mvnw dependency:go-offline
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+      # run tests!
+      - run: ./mvnw clean package

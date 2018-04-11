@@ -12,10 +12,16 @@ jobs:
       - checkout
 
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
-
       - run: sudo apt-get install postgresql-client
-
-      - run: ./.ci/prepare_postgres.sh
+      - run: psql -c "create user sample22plain with password 'sample22plain';" -U postgres -h localhost -p 5432
+      - run: psql -c "create database sample22plain;" -U postgres -h localhost -p 5432
+      - run: psql -c "grant all on database sample22plain to sample22plain;" -U postgres -h localhost -p 5432
+      - run: psql -c "create user sample22spring with password 'sample22spring';" -U postgres -h localhost -p 5432
+      - run: psql -c "create database sample22spring;" -U postgres -h localhost -p 5432
+      - run: psql -c "grant all on database sample22spring to sample22spring;" -U postgres -h localhost -p 5432
+      - run: psql -c "create user sample22jpa with password 'sample22jpa';" -U postgres -h localhost -p 5432
+      - run: psql -c "create database sample22jpa;" -U postgres -h localhost -p 5432
+      - run: psql -c "grant all on database sample22jpa to sample22jpa;" -U postgres -h localhost -p 5432
 
       - restore_cache:
           keys:

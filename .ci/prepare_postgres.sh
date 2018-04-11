@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 psql -c "create user sample22plain with password 'sample22plain';" -U postgres
 psql -c "create database sample22plain;" -U postgres

@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.mail.park.mechanics.base.Coords;
@@ -19,12 +18,10 @@ import ru.mail.park.mechanics.messages.outbox.InitGame;
 import ru.mail.park.mechanics.messages.outbox.ServerSnap;
 import ru.mail.park.model.Id;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SuppressWarnings("OverlyBroadThrowsClause")
-public class MessageSerializationTest {
+class MessageSerializationTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -43,7 +40,7 @@ public class MessageSerializationTest {
         assertNotNull(messageJson);
     }
 
-    static Stream<Message> twoWaySerializableProvider() {
+    private static Stream<Message> twoWaySerializableProvider() {
         final JoinGame.Request joinRequest = new JoinGame.Request();
         final ClientSnap clientSnap = new ClientSnap();
         clientSnap.setMouse(Coords.of(0, 0));
@@ -55,7 +52,7 @@ public class MessageSerializationTest {
 
     }
 
-    static Stream<Message> oneWaySerializableProvider() {
+    private static Stream<Message> oneWaySerializableProvider() {
         final InitGame.Request initGame = new InitGame.Request();
         initGame.setBoard(new Board.BoardSnap(List.of(), Id.of(0L), List.of()));
         initGame.setColors(Map.of());

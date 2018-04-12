@@ -6,24 +6,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.mail.park.mechanics.GameSession;
-import ru.mail.park.mechanics.game.GameUser;
 import ru.mail.park.mechanics.game.Board;
-import ru.mail.park.mechanics.services.MechanicsTimeService;
-import ru.mail.park.mechanics.services.Shuffler;
+import ru.mail.park.mechanics.game.GameUser;
 import ru.mail.park.mechanics.messages.inbox.ClientSnap;
 import ru.mail.park.mechanics.messages.outbox.InitGame;
+import ru.mail.park.mechanics.services.MechanicsTimeService;
+import ru.mail.park.mechanics.services.Shuffler;
 import ru.mail.park.model.Id;
 import ru.mail.park.model.UserProfile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("MagicNumber")
-public class SnapSerializationTest {
+class SnapSerializationTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private GameUser nogibator;
@@ -33,45 +33,43 @@ public class SnapSerializationTest {
 
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         pupkin = new UserProfile("Pupkin");
         dudkin = new UserProfile("Dudkin");
         nogibator = new GameUser(pupkin, new MechanicsTimeService());
         papkaPro = new GameUser(dudkin, new MechanicsTimeService());
     }
 
-    @SuppressWarnings("OverlyBroadThrowsClause")
     @Test
-    public void clientSnapTest() throws IOException {
+    void clientSnapTest() throws IOException {
         final String clientSnapStr =
-                    "{ " +
+                "{ " +
 
                         "\"mouse\":{" +
-                            "\"x\":34.4," +
-                            "\"y\":55.4" +
+                        "\"x\":34.4," +
+                        "\"y\":55.4" +
                         "}," +
                         "\"isFiring\":\"false\"," +
                         "\"class\":\"ClientSnap\"," +
                         "\"frameTime\":\"32\"" +
-                    '}';
+                        '}';
 
         final ClientSnap clientSnap = objectMapper.readValue(clientSnapStr, ClientSnap.class);
         final String clientSnapJson = objectMapper.writeValueAsString(clientSnap);
         assertNotNull(clientSnapJson);
     }
 
-    @SuppressWarnings("OverlyBroadThrowsClause")
     @Test
-    public void serverSnapTest() throws IOException {
+    void serverSnapTest() throws IOException {
         final GameUser.ServerPlayerSnap serverPlayerSnap = new GameUser.ServerPlayerSnap();
         serverPlayerSnap.setUserId(Id.of(4));
         final String result = objectMapper.writeValueAsString(serverPlayerSnap);
         objectMapper.readValue(result, GameUser.ServerPlayerSnap.class);
     }
 
-    @SuppressWarnings({"TooBroadScope", "OverlyBroadThrowsClause"})
+
     @Test
-    public void serverInitTest() throws IOException {
+    void serverInitTest() throws IOException {
         final InitGame.Request initGame = new InitGame.Request();
         final GameUser gameUser = new GameUser(pupkin, new MechanicsTimeService());
         assertNotNull(this.nogibator.getSnap());
@@ -81,7 +79,7 @@ public class SnapSerializationTest {
         final Map<Id<UserProfile>, String> colors = Map.of(
                 this.nogibator.getUserId(), "#aaaaaa",
                 this.papkaPro.getUserId(), "#cccccc");
-        final  Map<Id<UserProfile>, GameUser.ServerPlayerSnap> players = Map.of(
+        final Map<Id<UserProfile>, GameUser.ServerPlayerSnap> players = Map.of(
                 this.nogibator.getUserId(), this.nogibator.getSnap(),
                 this.papkaPro.getUserId(), this.nogibator.getSnap()
         );
@@ -96,7 +94,7 @@ public class SnapSerializationTest {
     }
 
     @Test
-    public void snapTest() throws JsonProcessingException {
+    void snapTest() throws JsonProcessingException {
         final Board square = initSquare(this.nogibator, this.papkaPro);
         final String squareJson = objectMapper.writeValueAsString(square.getSnap());
         assertNotNull(squareJson);

@@ -1,0 +1,19 @@
+{
+  "type": "Mage$MageResource",
+  "maxMana": 200,
+  "maxHealth": 75,
+  "spells":[
+    {
+      "type": "ResourceRef",
+      "path": "spells/HealSpell_Lvl2.json"
+    },
+    {
+      "type": "ResourceRef",
+      "path": "spells/ManaRegenSpell_Lvl1.json"
+    },
+    {
+      "type": "ResourceRef",
+      "path": "spells/UnhealSpell_Lvl2.json"
+    }
+  ]
+}

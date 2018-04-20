@@ -1,0 +1,5 @@
+{
+  "type": "ManaGainSpell",
+  "manaGain": 50,
+  "manaCost": 45
+}

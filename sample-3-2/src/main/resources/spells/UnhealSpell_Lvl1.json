@@ -1,0 +1,5 @@
+{
+  "type": "HealthGainSpell",
+  "healthGain": -15,
+  "manaCost": 0
+}

@@ -1,6 +1,10 @@
 package ru.mail.park.java.immutables;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +35,26 @@ class HouseTest {
 
     @Test
     void testMen() {
-        ImmutableHouse house = ImmutableHouse.builder()
+        ImmutableHouse house = build();
+
+        assertThrows(UnsupportedOperationException.class, () -> house.men().add("third"));
+        assertNotEquals(house, house.withMen("third"));
+    }
+
+    private static final String TEST_JSON = "{\"id\":0,\"name\":\"testname\",\"words\":\"testwords\",\"emblem\":\"testemblem\",\"allegianceId\":null,\"men\":[\"first\",\"second\"]}";
+
+    @Test
+    void testJsonWrite() throws JsonProcessingException {
+        assertEquals(TEST_JSON, new ObjectMapper().writeValueAsString(build()));
+    }
+
+    @Test
+    void testJsonRead() throws IOException {
+        assertEquals(build(), new ObjectMapper().readValue(TEST_JSON, House.class));
+    }
+
+    private ImmutableHouse build() {
+        return ImmutableHouse.builder()
                 .id(0L)
                 .name("testname")
                 .emblem("testemblem")
@@ -39,10 +62,5 @@ class HouseTest {
                 .addMen("first")
                 .addMen("second")
                 .build();
-
-        assertThrows(UnsupportedOperationException.class, () -> house.men().add("third"));
-
-        assertNotEquals(house, house.withMen("third"));
-
     }
 }

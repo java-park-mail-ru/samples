@@ -10,5 +10,6 @@
 
 	<modules>
 		<module>sample-jmh</module>
+		<module>sample-immutables</module>
 	</modules>
 </project>

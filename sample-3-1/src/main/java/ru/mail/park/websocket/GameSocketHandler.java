@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.mail.park.model.Id;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import static org.springframework.web.socket.CloseStatus.SERVER_ERROR;
 
 
+@Component
 public class GameSocketHandler extends TextWebSocketHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameSocketHandler.class);
     private static final CloseStatus ACCESS_DENIED = new CloseStatus(4500, "Not logged in. Access denied");

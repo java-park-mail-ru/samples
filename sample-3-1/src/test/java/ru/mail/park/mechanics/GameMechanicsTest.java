@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.mail.park.mechanics.base.Coords;
 import ru.mail.park.mechanics.game.MechanicPart;
 import ru.mail.park.mechanics.messages.inbox.ClientSnap;
-import ru.mail.park.mechanics.base.Coords;
 import ru.mail.park.mechanics.messages.outbox.FinishGame;
 import ru.mail.park.mechanics.services.GameSessionService;
 import ru.mail.park.mechanics.services.Shuffler;
@@ -28,10 +28,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -42,13 +39,11 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings({"MagicNumber", "NullableProblems", "SpringJavaAutowiredMembersInspection"})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ExtendWith(SpringExtension.class)
-public class GameMechanicsTest {
+class GameMechanicsTest {
 
-    @SuppressWarnings("unused")
     @MockBean
     private RemotePointService remotePointService;
-    @SuppressWarnings("unused")
-    @MockBean
+    @MockBean // purposely replace real executor
     private MechanicsExecutor mechanicsExecutor;
     @MockBean
     private Shuffler shuffler;
@@ -64,21 +59,21 @@ public class GameMechanicsTest {
     private UserProfile user2;
 
     @BeforeEach
-    public void setUp () {
+    void setUp() {
         when(remotePointService.isConnected(any())).thenReturn(true);
         user1 = accountService.addUser("user1");
         user2 = accountService.addUser("user2");
     }
 
     @AfterEach
-    public void tearDown () {
-       gameSessionService.getSessions().forEach(session -> gameSessionService.forceTerminate(session, false));
+    void tearDown() {
+        gameSessionService.getSessions().forEach(session -> gameSessionService.forceTerminate(session, false));
     }
 
     @Test
-    public void simpleFiring() {
+    void simpleFiring() {
         final GameSession gameSession = startGame(user1.getId(), user2.getId());
-        gameMechanics.addClientSnapshot(gameSession.getFirst().getUserId(), createClientSnap(25,true, Coords.of(1.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
+        gameMechanics.addClientSnapshot(gameSession.getFirst().getUserId(), createClientSnap(25, true, Coords.of(1.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
         gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(40, true, Coords.of(0.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
         gameMechanics.gmStep(100);
         assertEquals(1, gameSession.getFirst().claimPart(MechanicPart.class).getScore());
@@ -86,34 +81,34 @@ public class GameMechanicsTest {
     }
 
     @Test
-    public void firingAtLastTest() {
+    void firingAtLastTest() {
         Mockito.doAnswer(invocationOnMock -> {
             List<?> board = invocationOnMock.getArgument(0);
-            Collections.swap(board,0, 8);
+            Collections.swap(board, 0, 8);
             return null;
         }).when(shuffler).shuffle(any());
         final GameSession gameSession = startGame(user1.getId(), user2.getId());
-        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25,true, Coords.of(Config.SQUARE_SIZE * 5 / 2 ,Config.SQUARE_SIZE * 5 / 2)));
+        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25, true, Coords.of(Config.SQUARE_SIZE * 5 / 2, Config.SQUARE_SIZE * 5 / 2)));
         gameMechanics.gmStep(100);
         assertEquals(1, gameSession.getSecond().claimPart(MechanicPart.class).getScore());
     }
 
     @Test
-    public void firingTooFastTest() {
+    void firingTooFastTest() {
 
         final GameSession gameSession = startGame(user1.getId(), user2.getId());
-        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25,true, Coords.of(0.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
+        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25, true, Coords.of(0.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
         gameMechanics.gmStep(50);
-        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25,true, Coords.of(0.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
+        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25, true, Coords.of(0.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
         gameMechanics.gmStep(50);
-        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25,true, Coords.of(0.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
+        gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(25, true, Coords.of(0.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
         gameMechanics.gmStep(50);
         assertEquals(1, gameSession.getSecond().claimPart(MechanicPart.class).getScore());
     }
 
 
     @Test
-    public void firingToWin() throws IOException {
+    void firingToWin() throws IOException {
         final GameSession gameSession = startGame(user1.getId(), user2.getId());
 
         final Runnable iteration = () -> {
@@ -121,7 +116,7 @@ public class GameMechanicsTest {
             gameMechanics.gmStep(Config.FIRING_COOLDOWN);
         };
 
-        for(int i = 0; i < Config.SCORES_TO_WIN - 1; i++) {
+        for (int i = 0; i < Config.SCORES_TO_WIN - 1; i++) {
             iteration.run();
         }
         final ArgumentCaptor<FinishGame> firstFinishMessage = ArgumentCaptor.forClass(FinishGame.class);
@@ -142,16 +137,16 @@ public class GameMechanicsTest {
     }
 
     @Test
-    public void firingToDraw() throws IOException {
+    void firingToDraw() throws IOException {
         final GameSession gameSession = startGame(user1.getId(), user2.getId());
 
         final Runnable iteration = () -> {
             gameMechanics.addClientSnapshot(gameSession.getSecond().getUserId(), createClientSnap(Config.FIRING_COOLDOWN, true, Coords.of(0.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
-            gameMechanics.addClientSnapshot(gameSession.getFirst().getUserId(), createClientSnap(Config.FIRING_COOLDOWN, true, Coords.of(1.5 * Config.SQUARE_SIZE,0.5 * Config.SQUARE_SIZE)));
+            gameMechanics.addClientSnapshot(gameSession.getFirst().getUserId(), createClientSnap(Config.FIRING_COOLDOWN, true, Coords.of(1.5 * Config.SQUARE_SIZE, 0.5 * Config.SQUARE_SIZE)));
             gameMechanics.gmStep(Config.FIRING_COOLDOWN);
         };
 
-        for(int i = 0; i < Config.SCORES_TO_WIN - 1; i++) {
+        for (int i = 0; i < Config.SCORES_TO_WIN - 1; i++) {
             iteration.run();
         }
         final ArgumentCaptor<FinishGame> firstFinishMessage = ArgumentCaptor.forClass(FinishGame.class);
@@ -172,7 +167,7 @@ public class GameMechanicsTest {
     }
 
     @Test
-    public void gameStartedTest () {
+    void gameStartedTest() {
         startGame(user1.getId(), user2.getId());
     }
 
@@ -191,7 +186,7 @@ public class GameMechanicsTest {
         gameMechanics.addUser(player2);
         gameMechanics.gmStep(0);
         @Nullable final GameSession gameSession = gameSessionService.getSessionForUser(player1);
-        assertNotNull("Game session should be started on closest tick, but it didn't", gameSession);
+        assertNotNull(gameSession, "Game session should be started on closest tick, but it didn't");
         return gameSession;
     }
 }

@@ -11,5 +11,6 @@
 	<modules>
 		<module>sample-jmh</module>
 		<module>sample-immutables</module>
+		<module>sample-jcstress</module>
 	</modules>
 </project>

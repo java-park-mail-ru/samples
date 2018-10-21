@@ -12,11 +12,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<java.version>9</java.version>
+		<java.version>11</java.version>
 
-		<jmh.version>1.20</jmh.version>
+		<jmh.version>1.21</jmh.version>
 
-		<eclipse-collections.version>9.1.0</eclipse-collections.version>
+		<eclipse-collections.version>9.2.0</eclipse-collections.version>
 		<koloboke.version>1.0.0</koloboke.version>
 	</properties>
 

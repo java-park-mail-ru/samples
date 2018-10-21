@@ -16,5 +16,10 @@
 - [2.1](https://cloud.mail.ru/public/DDCF/kpeVANK7q)
 - [2.2](https://cloud.mail.ru/public/41uQ/QrRmnUifn)
 - [2.3](https://cloud.mail.ru/public/DCJz/wvyGMH2AM)
+- [3.1](https://www.dropbox.com/s/tk6wm3kcan4yp19/Java%203.1.pdf?dl=0)
+- [3.2](https://www.dropbox.com/s/0ulcpzi63nk5nrn/Java%203.2.pdf?dl=0)
+- [4.1](https://www.dropbox.com/s/2r40xqfbnucepk8/Java%204.1.pdf?dl=0)
+- [4.2](https://www.dropbox.com/s/xew012pgxaikk6r/Java%204.2.pdf?dl=0)
+- [4.3](https://www.dropbox.com/s/tgs9ht7hx181j4p/Java%204.3.pdf?dl=0)
 
 Если вы нашли ошибку в любом примере, или считаете что его можно улучшить - открывайте PR или issue.

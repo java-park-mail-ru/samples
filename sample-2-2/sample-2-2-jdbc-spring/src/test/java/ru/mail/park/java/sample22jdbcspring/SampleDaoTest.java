@@ -24,7 +24,7 @@ class SampleDaoTest {
 
     @Test
     void testCreateHouse() {
-        House house = dao.createHouse("testname", "testwords", "testsigil", null);
+        var house = dao.createHouse("testname", "testwords", "testsigil", null);
         assertTrue(house.getId() > 0);
         assertEquals("testname", house.getName());
         assertEquals("testwords", house.getWords());
@@ -34,7 +34,7 @@ class SampleDaoTest {
 
     @Test
     void testCreatePerson() {
-        Person person = dao.createPerson("testname", null, null, null);
+        var person = dao.createPerson("testname", null, null, null);
         assertTrue(person.getId() > 0);
         assertEquals("testname", person.getName());
         assertNull(person.getHouseId());
@@ -65,7 +65,7 @@ class SampleDaoTest {
 
     @Test
     void testCreateHouseNamed() {
-        House house = dao.createHouseNamed("testname", "testwords", "testsigil", null);
+        var house = dao.createHouseNamed("testname", "testwords", "testsigil", null);
         assertTrue(house.getId() > 0);
         assertEquals("testname", house.getName());
         assertEquals("testwords", house.getWords());

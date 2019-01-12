@@ -20,7 +20,7 @@ public class SampleDao {
 	}
 
 	private void createSchemaIfNotExists() {
-		try (Connection con = ds.getConnection(); Statement st = con.createStatement()) {
+		try (var con = ds.getConnection(); var st = con.createStatement()) {
 			st.executeUpdate("create table if not exists house(id serial primary key,"
 					+ " name text not null unique, sigil text, words text,"
 					+ " allegiance_id bigint references house(id))");
@@ -33,8 +33,8 @@ public class SampleDao {
 	}
 
 	public House createHouse(String name, String words, String sigil, Long allegianceId) {
-		try (Connection con = ds.getConnection();
-				PreparedStatement pst = con.prepareStatement(
+		try (var con = ds.getConnection();
+				var pst = con.prepareStatement(
 						"insert into house(name, sigil, words, allegiance_id) values(?,?,?,?) returning id",
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
 			pst.setString(1, name);
@@ -42,7 +42,7 @@ public class SampleDao {
 			pst.setString(3, sigil);
 			pst.setObject(4, allegianceId);
 			pst.executeUpdate();
-			try (ResultSet genKey = pst.getGeneratedKeys()) {
+			try (var genKey = pst.getGeneratedKeys()) {
 				if (genKey.next()) {
 					return new House(genKey.getLong(1), name, words, sigil, allegianceId);
 				} else {
@@ -57,8 +57,8 @@ public class SampleDao {
 
 	public Person createPerson(String name, Long houseId, Long fartherId, Long motherId) {
 
-		try (Connection con = ds.getConnection();
-				PreparedStatement pst = con.prepareStatement(
+		try (var con = ds.getConnection();
+				var pst = con.prepareStatement(
 						"insert into person(name, house_id, farther_id, mother_id) values(?,?,?,?) returning id",
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
 			pst.setString(1, name);
@@ -66,7 +66,7 @@ public class SampleDao {
 			pst.setObject(3, fartherId);
 			pst.setObject(4, motherId);
 			pst.executeUpdate();
-			try (ResultSet genKey = pst.getGeneratedKeys()) {
+			try (var genKey = pst.getGeneratedKeys()) {
 				if (genKey.next()) {
 					return new Person(genKey.getLong(1), name, houseId, fartherId, motherId);
 				} else {
@@ -80,10 +80,10 @@ public class SampleDao {
 	}
 
 	public Person getPerson(long id) {
-		try (Connection con = ds.getConnection();
-				PreparedStatement pst = con.prepareStatement("select * from person where id=?")) {
+		try (var con = ds.getConnection();
+				var pst = con.prepareStatement("select * from person where id=?")) {
 			pst.setLong(1, id);
-			try (ResultSet res = pst.executeQuery()) {
+			try (var res = pst.executeQuery()) {
 				if (res.next()) {
 					return mapPerson(res);
 				} else {
@@ -97,10 +97,10 @@ public class SampleDao {
 
 	public List<Person> getAllPeople() {
 
-		try (Connection con = ds.getConnection();
-				PreparedStatement pst = con.prepareStatement("select * from person");
-				ResultSet res = pst.executeQuery()) {
-			List<Person> result = new ArrayList<>();
+		try (var con = ds.getConnection();
+				var pst = con.prepareStatement("select * from person");
+				var res = pst.executeQuery()) {
+			var result = new ArrayList<Person>();
 			while (res.next()) {
 				result.add(mapPerson(res));
 			}
@@ -112,11 +112,11 @@ public class SampleDao {
 	}
 
 	public List<Person> getPeople(long houseId) {
-		try (Connection con = ds.getConnection();
-				PreparedStatement pst = con.prepareStatement("select * from person where house_id=?")) {
+		try (var con = ds.getConnection();
+				var pst = con.prepareStatement("select * from person where house_id=?")) {
 			pst.setLong(1, houseId);
-			try (ResultSet res = pst.executeQuery()) {
-				List<Person> result = new ArrayList<>();
+			try (var res = pst.executeQuery()) {
+				var result = new ArrayList<Person>();
 				while (res.next()) {
 					result.add(mapPerson(res));
 				}
@@ -128,8 +128,8 @@ public class SampleDao {
 	}
 
 	private Person mapPerson(ResultSet res) throws SQLException {
-		long id = res.getLong("id");
-		String name = res.getString("name");
+		var id = res.getLong("id");
+		var name = res.getString("name");
 		Long houseId = res.getLong("house_id");
 		if (res.wasNull()) {
 			houseId = null;

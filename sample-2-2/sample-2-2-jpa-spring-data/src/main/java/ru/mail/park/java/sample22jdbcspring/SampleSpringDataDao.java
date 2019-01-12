@@ -25,7 +25,7 @@ public class SampleSpringDataDao implements SampleDao {
 
 	@Override
 	public House createHouse(String name, String words, String sigil, Long allegianceId) {
-		House house = new House();
+		var house = new House();
 		house.setName(name);
 		house.setWords(words);
 		house.setSigil(sigil);
@@ -41,8 +41,7 @@ public class SampleSpringDataDao implements SampleDao {
 
 	@Override
 	public Person createPerson(String name, Long houseId, Long fartherId, Long motherId) {
-
-		Person person = new Person();
+		var person = new Person();
 		person.setName(name);
 		if (houseId != null) {
 			person.setHouseId(houseRepository.getOne(houseId));

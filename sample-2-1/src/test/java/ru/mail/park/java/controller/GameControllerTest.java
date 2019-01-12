@@ -28,7 +28,7 @@ class GameControllerTest {
 
     @Test
     void testMeRequiresLogin() {
-        final ResponseEntity<User> meResp = testRestTemplate.getForEntity("/me", User.class);
+        final var meResp = testRestTemplate.getForEntity("/me", User.class);
         assertEquals(HttpStatus.UNAUTHORIZED, meResp.getStatusCode());
     }
 
@@ -40,13 +40,13 @@ class GameControllerTest {
     private List<String> login() {
         when(userService.ensureUserExists(anyString())).thenReturn(new User("tester"));
 
-        final ResponseEntity<User> loginResp = testRestTemplate.postForEntity("/login/tester", null, User.class);
+        final var loginResp = testRestTemplate.postForEntity("/login/tester", null, User.class);
         assertEquals(HttpStatus.OK, loginResp.getStatusCode());
-        final List<String> cookies = loginResp.getHeaders().get("Set-Cookie");
+        final var cookies = loginResp.getHeaders().get("Set-Cookie");
         assertNotNull(cookies);
         assertFalse(cookies.isEmpty());
 
-        final User user = loginResp.getBody();
+        final var user = loginResp.getBody();
         assertNotNull(user);
         assertEquals("tester", user.getName());
 
@@ -55,17 +55,17 @@ class GameControllerTest {
 
     @Test
     void testMe() {
-        final List<String> cookies = login();
+        final var cookies = login();
 
-        final HttpHeaders requestHeaders = new HttpHeaders();
+        final var requestHeaders = new HttpHeaders();
         requestHeaders.put(HttpHeaders.COOKIE, cookies);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(requestHeaders);
+        final var requestEntity = new HttpEntity<>(requestHeaders);
 
         when(userService.getUser(anyString())).thenReturn(new User("tester"));
-        final ResponseEntity<User> meResp = testRestTemplate.exchange("/me", HttpMethod.GET, requestEntity, User.class);
+        final var meResp = testRestTemplate.exchange("/me", HttpMethod.GET, requestEntity, User.class);
 
         assertEquals(HttpStatus.OK, meResp.getStatusCode());
-        final User user = meResp.getBody();
+        final var user = meResp.getBody();
         assertNotNull(user);
         assertEquals("tester", user.getName());
     }

@@ -18,7 +18,7 @@ class UserServiceTest {
 
     @Test
     public void ensureExists() {
-        final User tester = userService.ensureUserExists("tester");
+        final var tester = userService.ensureUserExists("tester");
         assertNotNull(tester);
         assertSame(tester, userService.ensureUserExists("tester"), "User doesn't exist");
     }

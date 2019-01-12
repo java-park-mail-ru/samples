@@ -9,8 +9,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jcstress.version>0.4</jcstress.version>
-		<javac.target>9</javac.target>
+		<jcstress.version>0.5</jcstress.version>
+		<javac.target>11</javac.target>
 		<uberjar.name>jcstress</uberjar.name>
 	</properties>
 
@@ -35,7 +35,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>3.8.0</version>
 				<configuration>
 					<compilerVersion>${javac.target}</compilerVersion>
 					<source>${javac.target}</source>

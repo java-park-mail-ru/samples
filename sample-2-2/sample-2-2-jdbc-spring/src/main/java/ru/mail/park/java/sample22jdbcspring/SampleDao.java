@@ -27,9 +27,9 @@ public class SampleDao {
 	}
 
 	public House createHouse(String name, String words, String sigil, Long allegianceId) {
-		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+		var keyHolder = new GeneratedKeyHolder();
 		template.update(con -> {
-			PreparedStatement pst = con.prepareStatement(
+			var pst = con.prepareStatement(
 					"insert into house(name, sigil, words, allegiance_id)" + " values(?,?,?,?)" + " returning id",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			pst.setString(1, name);
@@ -53,7 +53,7 @@ public class SampleDao {
 	};
 
 	public House getHouse(long id) {
-		List<House> result = template.query("select * from house where id=?", ps -> ps.setLong(1, id), HOUSE_MAPPER);
+		var result = template.query("select * from house where id=?", ps -> ps.setLong(1, id), HOUSE_MAPPER);
 		if (result.isEmpty()) {
 			return null;
 		}
@@ -61,9 +61,9 @@ public class SampleDao {
 	}
 
 	public Person createPerson(String name, Long houseId, Long fartherId, Long motherId) {
-		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+		var keyHolder = new GeneratedKeyHolder();
 		template.update(con -> {
-			PreparedStatement pst = con.prepareStatement(
+			var pst = con.prepareStatement(
 					"insert into person(name, house_id, farther_id, mother_id)" + " values(?,?,?,?)" + " returning id",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			pst.setString(1, name);
@@ -76,8 +76,8 @@ public class SampleDao {
 	}
 
 	private static final RowMapper<Person> PERSON_MAPPER = (res, num) -> {
-		long id = res.getLong("id");
-		String name = res.getString("name");
+		var id = res.getLong("id");
+		var name = res.getString("name");
 		Long houseId = res.getLong("house_id");
 		if (res.wasNull()) {
 			houseId = null;
@@ -94,7 +94,7 @@ public class SampleDao {
 	};
 
 	public Person getPerson(long id) {
-		List<Person> result = template.query("select * from person where id=?", ps -> ps.setLong(1, id), PERSON_MAPPER);
+		var result = template.query("select * from person where id=?", ps -> ps.setLong(1, id), PERSON_MAPPER);
 		if (result.isEmpty()) {
 			return null;
 		}
@@ -110,8 +110,8 @@ public class SampleDao {
 	}
 
 	public House createHouseNamed(String name, String words, String sigil, Long allegianceId) {
-		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-		MapSqlParameterSource params = new MapSqlParameterSource();
+		var keyHolder = new GeneratedKeyHolder();
+		var params = new MapSqlParameterSource();
 		params.addValue("name", name);
 		params.addValue("words", words);
 		params.addValue("sigil", sigil);

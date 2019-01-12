@@ -37,7 +37,7 @@ public class Person {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final var prime = 31;
 		int result = 1;
 		result = prime * result + ((fartherId == null) ? 0 : fartherId.hashCode());
 		result = prime * result + ((houseId == null) ? 0 : houseId.hashCode());
@@ -55,7 +55,7 @@ public class Person {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Person other = (Person) obj;
+		var other = (Person) obj;
 		if (fartherId == null) {
 			if (other.fartherId != null)
 				return false;

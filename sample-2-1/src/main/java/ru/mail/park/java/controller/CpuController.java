@@ -11,7 +11,7 @@ public class CpuController {
 
     @GetMapping("/factorial/{num}")
     public Double burn(@PathVariable int num) {
-        BigInteger result = BigInteger.ONE;
+        var result = BigInteger.ONE;
         for (int i = 1; i <= num; i++) {
             result = result.multiply(BigInteger.valueOf(i));
         }

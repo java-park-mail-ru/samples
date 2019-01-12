@@ -37,7 +37,7 @@ public class House {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final var prime = 31;
 		int result = 1;
 		result = prime * result + ((allegianceId == null) ? 0 : allegianceId.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
@@ -55,7 +55,7 @@ public class House {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		House other = (House) obj;
+		var other = (House) obj;
 		if (allegianceId == null) {
 			if (other.allegianceId != null)
 				return false;

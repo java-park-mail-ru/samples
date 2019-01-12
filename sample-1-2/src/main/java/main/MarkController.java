@@ -16,7 +16,7 @@ public class MarkController {
 
     @PostMapping(value = "/sign", consumes = "application/json")
     public ResponseEntity postHello(HttpSession httpSession) {
-        Long userId = (Long) httpSession.getAttribute("userId");
+        var userId = (Long) httpSession.getAttribute("userId");
         if (userId == null) {
             userId = ID_GENERATOR.getAndIncrement();
             httpSession.setAttribute("userId", userId);

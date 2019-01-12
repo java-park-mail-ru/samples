@@ -33,26 +33,25 @@ class SampleControllerTest {
 
     @Test
     void testCreatePerson() throws Exception {
-        IdMatcherGetter idGetter = new IdMatcherGetter();
+        var idGetter = new IdMatcherGetter();
         mockMvc.perform(put("/person").param("name", "testName")).andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("testName")).andExpect(jsonPath("id").isNumber())
                 .andExpect(jsonPath("id").value(idGetter)).andExpect(jsonPath("houseId").doesNotExist())
                 .andExpect(jsonPath("motherId").doesNotExist()).andExpect(jsonPath("fartherId").doesNotExist());
         assertFalse(0 == idGetter.id);
-        Person created = dao.getPerson(idGetter.id);
-        assertNotNull(created);
+        assertNotNull(dao.getPerson(idGetter.id));
     }
 
     @Test
     void testCreateHouse() throws Exception {
-        IdMatcherGetter idGetter = new IdMatcherGetter();
+        var idGetter = new IdMatcherGetter();
         mockMvc.perform(put("/house").param("name", "testName")).andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("testName")).andExpect(jsonPath("id").isNumber())
                 .andExpect(jsonPath("id").value(idGetter)).andExpect(jsonPath("words").doesNotExist())
                 .andExpect(jsonPath("sigil").doesNotExist()).andExpect(jsonPath("sigil").doesNotExist());
         assertFalse(0 == idGetter.id);
-        House created = dao.getHouse(idGetter.id);
-        assertNotNull(created);
+        assertNotNull(dao.getHouse(idGetter.id));
+
     }
 
     @Test

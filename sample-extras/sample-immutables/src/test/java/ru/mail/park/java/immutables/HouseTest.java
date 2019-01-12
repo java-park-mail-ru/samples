@@ -35,7 +35,7 @@ class HouseTest {
 
     @Test
     void testMen() {
-        ImmutableHouse house = build();
+        var house = build();
 
         assertThrows(UnsupportedOperationException.class, () -> house.men().add("third"));
         assertNotEquals(house, house.withMen("third"));

@@ -40,7 +40,7 @@ public class MapsBenchmark {
     @Setup
     public void setup() {
         for (int i = 0; i < size; i++) {
-            Object value = new Object();
+            var value = new Object();
             eclipseMap.put(i, value);
             hashMap.put(i, value);
             koloboke.put(i, value);

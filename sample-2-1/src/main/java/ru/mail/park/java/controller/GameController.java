@@ -27,7 +27,7 @@ public class GameController {
 
     @GetMapping("/me")
     public User me(HttpSession session) {
-        final String username = (String) session.getAttribute("username");
+        final var username = (String) session.getAttribute("username");
         if (username == null) {
             throw new NotLoggedInException();
         }
@@ -36,14 +36,14 @@ public class GameController {
 
     @PostMapping("/gain")
     public User gain(HttpSession session) {
-        final User me = me(session);
+        final var me = me(session);
         return me.increasePower();
     }
 
     @PostMapping("/fight/{victim}")
     public User fight(@PathVariable String victim, HttpSession session) {
-        final User me = me(session);
-        final User other = userService.getUser(victim);
+        final var me = me(session);
+        final var other = userService.getUser(victim);
         if (other == null) {
             throw new UserNotFoundException();
         }

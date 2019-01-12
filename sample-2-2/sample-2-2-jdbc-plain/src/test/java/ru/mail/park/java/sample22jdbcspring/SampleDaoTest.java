@@ -25,7 +25,7 @@ class SampleDaoTest {
 
 	@BeforeAll
 	static void setUpDataSource() {
-		HikariConfig config = new HikariConfig();
+		var config = new HikariConfig();
 		config.setJdbcUrl("jdbc:postgresql://localhost/sample22plain");
 		config.setUsername("sample22plain");
 		config.setPassword("sample22plain");
@@ -51,7 +51,7 @@ class SampleDaoTest {
 	}
 
 	private void clearDb() {
-		try (Connection con = ds.getConnection(); Statement st = con.createStatement()) {
+		try (var con = ds.getConnection(); var st = con.createStatement()) {
 			st.executeUpdate("truncate house, person");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -60,7 +60,7 @@ class SampleDaoTest {
 
 	@Test
 	void testCreateHouse() {
-		House house = dao.createHouse("testname", "testwords", "testsigil", null);
+		var house = dao.createHouse("testname", "testwords", "testsigil", null);
 		assertTrue(house.getId() > 0);
 		assertEquals("testname", house.getName());
 		assertEquals("testwords", house.getWords());
@@ -70,7 +70,7 @@ class SampleDaoTest {
 
 	@Test
 	void testCreatePerson() {
-		Person person = dao.createPerson("testname", null, null, null);
+		var person = dao.createPerson("testname", null, null, null);
 		assertTrue(person.getId() > 0);
 		assertEquals("testname", person.getName());
 		assertNull(person.getHouseId());
@@ -82,9 +82,9 @@ class SampleDaoTest {
 
 	@Test
 	void testSnow() {
-		House starks = dao.createHouse("Starks", "Winter is coming", "Direwolf", null);
-		Person ned = dao.createPerson("Eddard", starks.getId(), null, null);
-		Person john = dao.createPerson("John", null, ned.getId(), null);
+		var starks = dao.createHouse("Starks", "Winter is coming", "Direwolf", null);
+		var ned = dao.createPerson("Eddard", starks.getId(), null, null);
+		var john = dao.createPerson("John", null, ned.getId(), null);
 
 		assertEquals(ned, dao.getPerson(ned.getId()));
 		assertEquals(john, dao.getPerson(john.getId()));

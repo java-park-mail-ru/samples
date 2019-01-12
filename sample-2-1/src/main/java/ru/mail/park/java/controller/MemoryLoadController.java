@@ -11,8 +11,8 @@ public class MemoryLoadController {
 
     @GetMapping("/allocate/{mbs}")
     public int allocate(@PathVariable int mbs) {
-        final ThreadLocalRandom random = ThreadLocalRandom.current();
-        int dummyresult = 0;
+        final var random = ThreadLocalRandom.current();
+        var dummyresult = 0;
         for (int i = 0; i < mbs; i++) {
             final byte[] mb = new byte[1024 * 1024];
             random.nextBytes(mb);
@@ -22,9 +22,9 @@ public class MemoryLoadController {
     }
 
     private static int sum(byte[] bytes) {
-        int result = 0;
-        for (int i = 0; i < bytes.length; i++) {
-            result += bytes[i];
+        var result = 0;
+        for (byte b : bytes) {
+            result += b;
         }
         return result;
     }
